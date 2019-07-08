@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/Users/antoniolig/Developer/android/AndroidNativeBasedSample/app/.externalNativeBuild/cmake/debug/armeabi-v7a",
-  "command": "/Users/antoniolig/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/bin/clang++ --target=armv7-none-linux-androideabi16 --gcc-toolchain=/Users/antoniolig/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64 --sysroot=/Users/antoniolig/Library/Android/sdk/ndk-bundle/toolchains/llvm/prebuilt/darwin-x86_64/sysroot  -Djni_wrapper_EXPORTS -I/Users/antoniolig/Developer/native_prebuilt_libs/nativemobile/include  -g -DANDROID -fdata-sections -ffunction-sections -funwind-tables -fstack-protector-strong -no-canonical-prefixes -mfpu=vfpv3-d16 -fno-addrsig -march=armv7-a -mthumb -Wa,--noexecstack -Wformat -Werror=format-security -stdlib=libc++ -std=c++17 -O0 -fno-limit-debug-info  -fPIC   -o CMakeFiles/jni-wrapper.dir/jni-wrapper.cpp.o -c /Users/antoniolig/Developer/android/AndroidNativeBasedSample/app/src/main/cpp/jni-wrapper.cpp",
-  "file": "/Users/antoniolig/Developer/android/AndroidNativeBasedSample/app/src/main/cpp/jni-wrapper.cpp"
-}
-]
