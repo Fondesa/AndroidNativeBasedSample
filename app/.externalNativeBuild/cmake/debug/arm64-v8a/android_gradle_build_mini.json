@@ -1,0 +1,18 @@
+{
+  "buildFiles": [
+    "/Users/antoniolig/Library/Android/sdk/ndk-bundle/build/cmake/platforms.cmake",
+    "/Users/antoniolig/Library/Android/sdk/ndk-bundle/build/cmake/android.toolchain.cmake",
+    "/Users/antoniolig/Developer/android/AndroidNativeBasedSample/app/src/main/cpp/CMakeLists.txt"
+  ],
+  "cleanCommands": [
+    "/Users/antoniolig/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake --build \"/Users/antoniolig/Developer/android/AndroidNativeBasedSample/app/.externalNativeBuild/cmake/debug/arm64-v8a\" --target clean"
+  ],
+  "libraries": {
+    "jni-wrapper-Debug-arm64-v8a": {
+      "artifactName": "jni-wrapper",
+      "buildCommand": "/Users/antoniolig/Library/Android/sdk/cmake/3.10.2.4988404/bin/cmake --build \"/Users/antoniolig/Developer/android/AndroidNativeBasedSample/app/.externalNativeBuild/cmake/debug/arm64-v8a\" --target jni-wrapper",
+      "abi": "arm64-v8a",
+      "output": "/Users/antoniolig/Developer/android/AndroidNativeBasedSample/app/build/intermediates/cmake/debug/obj/arm64-v8a/libjni-wrapper.so"
+    }
+  }
+}
