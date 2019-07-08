@@ -77,3 +77,4 @@ projectFilesBackup
 /cmd_build
 /.vscode
 *.code-workspace
+/.externalNativeBuild
