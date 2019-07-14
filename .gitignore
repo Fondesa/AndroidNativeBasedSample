@@ -62,7 +62,6 @@ projectFilesBackup
 *.lo
 *.o
 *.gch
-*.so
 *.dylib
 *.mod
 *.smod
@@ -77,4 +76,4 @@ projectFilesBackup
 /cmd_build
 /.vscode
 *.code-workspace
-/.externalNativeBuild
+.externalNativeBuild
