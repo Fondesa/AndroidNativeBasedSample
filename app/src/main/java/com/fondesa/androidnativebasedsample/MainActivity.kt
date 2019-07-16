@@ -13,5 +13,8 @@ class MainActivity : AppCompatActivity() {
         val input = "_input_string_"
         val output = Foo.foo(input)
         textView.text = output
+
+        val repository = NoteRepository()
+        repository.remove(6)
     }
 }
