@@ -2,6 +2,8 @@
 #include <string>
 #include "in_memory_note_repository.hpp"
 #include "foo.hpp"
+#include "log/log.hpp"
+#include "jni_util/jclass_util.hpp"
 
 extern "C" {
 JNIEXPORT jstring JNICALL
@@ -36,5 +38,24 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_remove(
 ) {
     auto repository = (InMemoryNoteRepository *) handle;
     repository->remove(id);
+}
+
+JNIEXPORT void JNICALL
+Java_com_fondesa_androidnativebasedsample_NoteRepository_insert(
+        JNIEnv *env,
+        jobject /* this */,
+        jlong handle,
+        jobject jDraftNote
+) {
+    jclass draftNoteClass = env->GetObjectClass(jDraftNote);
+
+    auto title = jclass_util::getStringField(env, jDraftNote, draftNoteClass, "title");
+    auto description = jclass_util::getStringField(env, jDraftNote, draftNoteClass, "description");
+
+    auto draftNote = std::make_unique<DraftNote>(title.utfValue, description.utfValue);
+    auto repository = (InMemoryNoteRepository *) handle;
+    repository->insert(*draftNote);
+
+    log::debug("Insert note");
 }
 }

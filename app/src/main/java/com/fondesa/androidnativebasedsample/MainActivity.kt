@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
         textView.text = output
 
         val repository = NoteRepository()
+        repository.insert(DraftNote("first-title", "first-description"))
+        repository.insert(DraftNote("second-title", "second-description"))
         repository.remove(6)
     }
 }
