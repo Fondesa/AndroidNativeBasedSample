@@ -1,6 +1,5 @@
 #include <jni.h>
 #include <string>
-#include <iostream>
 #include "in_memory_note_repository.hpp"
 #include "foo.hpp"
 
@@ -23,7 +22,8 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_initialize(
         jobject /* this */
 ) {
     auto repository = std::make_unique<InMemoryNoteRepository>();
-    auto repositoryHandle = repository.get();
+    // Obtain the stored pointer and release ownership over it.
+    auto repositoryHandle = repository.release();
     return reinterpret_cast<jlong>(repositoryHandle);
 }
 
