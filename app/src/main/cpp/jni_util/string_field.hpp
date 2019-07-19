@@ -1,0 +1,19 @@
+#pragma once
+
+#include <jni.h>
+
+namespace jni_util {
+
+    class StringField {
+    public:
+        const char *utfValue;
+
+        StringField(JNIEnv *env, jstring jvalue);
+
+        ~StringField();
+
+    private:
+        jstring jvalue;
+        JNIEnv *env;
+    };
+}

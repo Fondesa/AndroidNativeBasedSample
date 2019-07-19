@@ -1,21 +1,7 @@
+#include <string>
 #include "jclass_util.hpp"
-#include "../log/log.hpp"
 
-namespace jclass_util {
-
-    StringField::StringField(JNIEnv *env, jstring jvalue) {
-        this->env = env;
-        this->jvalue = jvalue;
-        jboolean isCopy = JNI_TRUE;
-        this->utfValue = env->GetStringUTFChars(jvalue, &isCopy);
-        log::debug("StringField constructor called with value: " + std::string(utfValue));
-    }
-
-    StringField::~StringField() {
-        // Release the UTF chars when they aren't used anymore.
-        env->ReleaseStringUTFChars(jvalue, utfValue);
-        log::debug("StringField destructor called");
-    }
+namespace jni_util {
 
     StringField findStringField(JNIEnv *env, jobject obj, jclass cls, const char *fieldName) {
         jfieldID fieldId = env->GetFieldID(cls, fieldName, "Ljava/lang/String;");
@@ -33,7 +19,7 @@ namespace jclass_util {
         return noteClass;
     }
 
-    jmethodID findMethod(JNIEnv *env, jclass cls, const char* name, const char* signature) {
+    jmethodID findMethod(JNIEnv *env, jclass cls, const char *name, const char *signature) {
         jmethodID method = env->GetMethodID(cls, name, signature);
         if (!method) {
             auto msg = std::string("The method \"") + name + "()\" doesn't exist.";
@@ -43,7 +29,7 @@ namespace jclass_util {
         return method;
     }
 
-    jmethodID findConstructor(JNIEnv *env, jclass cls, const char* signature) {
+    jmethodID findConstructor(JNIEnv *env, jclass cls, const char *signature) {
         return findMethod(env, cls, "<init>", signature);
     }
 

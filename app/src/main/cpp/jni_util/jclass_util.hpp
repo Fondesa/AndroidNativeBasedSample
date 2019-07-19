@@ -1,21 +1,9 @@
 #pragma once
 
 #include <jni.h>
+#include "string_field.hpp"
 
-namespace jclass_util {
-
-    class StringField {
-    public:
-        const char *utfValue;
-
-        StringField(JNIEnv *env, jstring jvalue);
-
-        ~StringField();
-
-    private:
-        jstring jvalue;
-        JNIEnv *env;
-    };
+namespace jni_util {
 
     StringField findStringField(JNIEnv *env, jobject obj, jclass cls, const char *fieldName);
 
