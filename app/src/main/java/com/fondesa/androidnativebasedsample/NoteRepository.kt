@@ -8,7 +8,7 @@ class NoteRepository {
 
     fun insert(draftNote: DraftNote) = insert(repositoryHandle, draftNote)
 
-    fun getAll() = getAll(repositoryHandle)
+    fun getAll(): List<Note> = getAll(repositoryHandle).toList()
 
     private external fun initialize(): Long
 
@@ -16,7 +16,7 @@ class NoteRepository {
 
     private external fun insert(handle: Long, draftNote: DraftNote)
 
-    private external fun getAll(handle: Long): Note
+    private external fun getAll(handle: Long): Array<Note>
 
     companion object {
         init {

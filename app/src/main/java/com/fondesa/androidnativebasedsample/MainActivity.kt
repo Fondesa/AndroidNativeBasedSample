@@ -1,7 +1,7 @@
 package com.fondesa.androidnativebasedsample
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -15,9 +15,9 @@ class MainActivity : AppCompatActivity() {
         textView.text = output
 
         val repository = NoteRepository()
-        val notes = repository.getAll()
         repository.insert(DraftNote("first-title", "first-description"))
         repository.insert(DraftNote("second-title", "second-description"))
+        val notes = repository.getAll()
         repository.remove(6)
     }
 }

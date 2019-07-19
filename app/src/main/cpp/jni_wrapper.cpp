@@ -4,6 +4,7 @@
 #include "foo.hpp"
 #include "log/log.hpp"
 #include "jni_util/jclass_util.hpp"
+#include <climits>
 
 extern "C" {
 JNIEXPORT jstring JNICALL
@@ -58,18 +59,36 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_insert(
 
     log::debug("Insert note");
 }
-JNIEXPORT jobject JNICALL
+JNIEXPORT jobjectArray JNICALL
 Java_com_fondesa_androidnativebasedsample_NoteRepository_getAll(
         JNIEnv *env,
         jobject /* this */,
         jlong handle
 ) {
-    jclass noteClass = jni_util::findClass(env, "com/fondesa/androidnativebasedsample/Note");
-    jmethodID constructorId = jni_util::findConstructor(env, noteClass,
-                                                           "(ILjava/lang/String;Ljava/lang/String;)V");
+    auto repository = (InMemoryNoteRepository *) handle;
+    auto notes = repository->getAll();
+    int size = static_cast<int>(notes.size());
 
-    return env->NewObject(noteClass, constructorId, (jint) 4,
-                          env->NewStringUTF("dummy-title"),
-                          env->NewStringUTF("dummy-description"));
+    jclass noteClass = jni_util::findClass(env, "com/fondesa/androidnativebasedsample/Note");
+
+    jobjectArray jNotes = env->NewObjectArray(size, noteClass, nullptr);
+
+    jmethodID noteConstructorId = jni_util::findConstructor(env, noteClass,
+                                                            "(ILjava/lang/String;Ljava/lang/String;)V");
+
+    for (int i = 0; i < size; i++) {
+        auto note = notes[i];
+        jint noteId = note->getId();
+        jstring noteTitle = env->NewStringUTF(note->getTitle().c_str());
+        jstring noteDescription = env->NewStringUTF(note->getDescription().c_str());
+
+        auto jNote = env->NewObject(noteClass, noteConstructorId,
+                                    noteId,
+                                    noteTitle,
+                                    noteDescription);
+
+        env->SetObjectArrayElement(jNotes, i, jNote);
+    }
+    return jNotes;
 }
 }

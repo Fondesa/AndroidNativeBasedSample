@@ -11,6 +11,7 @@ namespace jni_util {
 
     jclass findClass(JNIEnv *env, const char *className) {
         jclass noteClass = env->FindClass(className);
+        // TODO: use different null check
         if (!noteClass) {
             auto msg = std::string("The class \"") + className + "\" doesn't exist.";
             env->ThrowNew(env->FindClass("java/lang/ClassNotFoundException"), msg.c_str());
@@ -21,6 +22,7 @@ namespace jni_util {
 
     jmethodID findMethod(JNIEnv *env, jclass cls, const char *name, const char *signature) {
         jmethodID method = env->GetMethodID(cls, name, signature);
+        // TODO: use different null check
         if (!method) {
             auto msg = std::string("The method \"") + name + "()\" doesn't exist.";
             env->ThrowNew(env->FindClass("java/lang/NoSuchMethodError"), msg.c_str());
