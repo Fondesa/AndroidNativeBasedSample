@@ -4,14 +4,13 @@
 #include "foo.hpp"
 #include "log/log.hpp"
 #include "jni_util/jclass_util.hpp"
-#include <climits>
 
 extern "C" {
 JNIEXPORT jstring JNICALL
 Java_com_fondesa_androidnativebasedsample_Foo_foo(
-        JNIEnv *env,
-        jobject /* this */,
-        jstring input) {
+    JNIEnv *env,
+    jobject /* this */,
+    jstring input) {
     jboolean isCopy = JNI_TRUE;
     const char *utfInput = env->GetStringUTFChars(input, &isCopy);
     std::string stdInput = std::string(utfInput);
@@ -21,8 +20,8 @@ Java_com_fondesa_androidnativebasedsample_Foo_foo(
 }
 JNIEXPORT jlong JNICALL
 Java_com_fondesa_androidnativebasedsample_NoteRepository_initialize(
-        JNIEnv *env,
-        jobject /* this */
+    JNIEnv *env,
+    jobject /* this */
 ) {
     auto repository = std::make_unique<InMemoryNoteRepository>();
     // Obtain the stored pointer and release ownership over it.
@@ -32,10 +31,10 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_initialize(
 
 JNIEXPORT void JNICALL
 Java_com_fondesa_androidnativebasedsample_NoteRepository_remove(
-        JNIEnv *env,
-        jobject /* this */,
-        jlong handle,
-        jint id
+    JNIEnv *env,
+    jobject /* this */,
+    jlong handle,
+    jint id
 ) {
     auto repository = (InMemoryNoteRepository *) handle;
     repository->remove(id);
@@ -43,10 +42,10 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_remove(
 
 JNIEXPORT void JNICALL
 Java_com_fondesa_androidnativebasedsample_NoteRepository_insert(
-        JNIEnv *env,
-        jobject /* this */,
-        jlong handle,
-        jobject jDraftNote
+    JNIEnv *env,
+    jobject /* this */,
+    jlong handle,
+    jobject jDraftNote
 ) {
     jclass draftNoteClass = env->GetObjectClass(jDraftNote);
 
@@ -61,34 +60,29 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_insert(
 }
 JNIEXPORT jobjectArray JNICALL
 Java_com_fondesa_androidnativebasedsample_NoteRepository_getAll(
-        JNIEnv *env,
-        jobject /* this */,
-        jlong handle
+    JNIEnv *env,
+    jobject /* this */,
+    jlong handle
 ) {
     auto repository = (InMemoryNoteRepository *) handle;
     auto notes = repository->getAll();
-    int size = static_cast<int>(notes.size());
 
     jclass noteClass = jni_util::findClass(env, "com/fondesa/androidnativebasedsample/Note");
-
-    jobjectArray jNotes = env->NewObjectArray(size, noteClass, nullptr);
-
-    jmethodID noteConstructorId = jni_util::findConstructor(env, noteClass,
+    jmethodID noteConstructorId = jni_util::findConstructor(env,
+                                                            noteClass,
                                                             "(ILjava/lang/String;Ljava/lang/String;)V");
 
-    for (int i = 0; i < size; i++) {
-        auto note = notes[i];
+    auto mapper = [&](std::shared_ptr<Note> note) {
         jint noteId = note->getId();
         jstring noteTitle = env->NewStringUTF(note->getTitle().c_str());
         jstring noteDescription = env->NewStringUTF(note->getDescription().c_str());
 
-        auto jNote = env->NewObject(noteClass, noteConstructorId,
-                                    noteId,
-                                    noteTitle,
-                                    noteDescription);
-
-        env->SetObjectArrayElement(jNotes, i, jNote);
-    }
-    return jNotes;
+        return env->NewObject(noteClass,
+                              noteConstructorId,
+                              noteId,
+                              noteTitle,
+                              noteDescription);
+    };
+    return jni_util::jArrayFromVector<std::shared_ptr<Note>>(env, noteClass, notes, mapper);
 }
 }

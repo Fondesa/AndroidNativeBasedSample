@@ -4,16 +4,16 @@
 
 namespace jni_util {
 
-    class StringField {
-    public:
-        const char *utfValue;
+class StringField {
+   public:
+    const char *utfValue;
 
-        StringField(JNIEnv *env, jstring jvalue);
+    StringField(JNIEnv *env, jstring jvalue);
 
-        ~StringField();
+    ~StringField();
 
-    private:
-        jstring jvalue;
-        JNIEnv *env;
-    };
+   private:
+    jstring jvalue;
+    JNIEnv *env;
+};
 }
