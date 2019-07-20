@@ -58,6 +58,27 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_insert(
 
     log::debug("Insert note");
 }
+
+JNIEXPORT void JNICALL
+Java_com_fondesa_androidnativebasedsample_NoteRepository_update(
+    JNIEnv *env,
+    jobject /* this */,
+    jlong handle,
+    jint noteId,
+    jobject jDraftNote
+) {
+    jclass draftNoteClass = env->GetObjectClass(jDraftNote);
+
+    auto title = jni_util::findStringField(env, jDraftNote, draftNoteClass, "title");
+    auto description = jni_util::findStringField(env, jDraftNote, draftNoteClass, "description");
+
+    auto draftNote = std::make_unique<DraftNote>(title.utfValue, description.utfValue);
+    auto repository = (InMemoryNoteRepository *) handle;
+    repository->update(noteId, *draftNote);
+
+    log::debug("Update note");
+}
+
 JNIEXPORT jobjectArray JNICALL
 Java_com_fondesa_androidnativebasedsample_NoteRepository_getAll(
     JNIEnv *env,

@@ -18,6 +18,12 @@ class MainActivity : AppCompatActivity() {
         repository.insert(DraftNote("first-title", "first-description"))
         repository.insert(DraftNote("second-title", "second-description"))
         val notes = repository.getAll()
-        repository.remove(6)
+        repository.update(
+            notes[1].id,
+            DraftNote("updated-second-title", "updated-second-description")
+        )
+        val notesAfterUpdate = repository.getAll()
+        repository.remove(0)
+        val notesAfterRemove = repository.getAll()
     }
 }
