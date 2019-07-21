@@ -60,10 +60,10 @@ jobjectArray jArrayFromVector(
  */
 namespace jni {
 
-template jobjectArray jArrayFromVector<std::shared_ptr<Note>>(
+template jobjectArray jArrayFromVector<Note>(
     JNIEnv *env,
     jclass cls,
-    std::vector<std::shared_ptr<Note>> items,
-    std::function<jobject(std::shared_ptr<Note>)> mapper
+    std::vector<Note> items,
+    std::function<jobject(Note)> mapper
 );
 }

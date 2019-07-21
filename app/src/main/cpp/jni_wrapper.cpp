@@ -86,9 +86,9 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_getAll(
                                                        noteClass,
                                                        "(ILjava/lang/String;Ljava/lang/String;)V");
 
-    auto mapper = [&](std::shared_ptr<Note> note) {
-        return jni::mapFromNative<Note>(env, *note, noteClass, noteConstructorId);
+    auto mapper = [&](Note note) {
+        return jni::mapFromNative<Note>(env, note, noteClass, noteConstructorId);
     };
-    return jni::jArrayFromVector<std::shared_ptr<Note>>(env, noteClass, notes, mapper);
+    return jni::jArrayFromVector<Note>(env, noteClass, notes, mapper);
 }
 }
