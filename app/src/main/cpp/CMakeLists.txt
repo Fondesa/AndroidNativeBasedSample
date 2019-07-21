@@ -9,6 +9,7 @@ set_target_properties(native_mobile_lib PROPERTIES IMPORTED_LOCATION
 set(SOURCE_FILES
         jni_wrapper.cpp
         jni_util/jclass_util.cpp
+        jni_util/mapping.cpp
         jni_util/string_field.cpp
         log/log.cpp
 )

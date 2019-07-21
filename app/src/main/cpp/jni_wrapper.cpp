@@ -4,6 +4,7 @@
 #include "foo.hpp"
 #include "log/log.hpp"
 #include "jni_util/jclass_util.hpp"
+#include "jni_util/mapping.hpp"
 
 extern "C" {
 JNIEXPORT jstring JNICALL
@@ -47,14 +48,10 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_insert(
     jlong handle,
     jobject jDraftNote
 ) {
-    jclass draftNoteClass = env->GetObjectClass(jDraftNote);
-
-    auto title = jni_util::findStringField(env, jDraftNote, draftNoteClass, "title");
-    auto description = jni_util::findStringField(env, jDraftNote, draftNoteClass, "description");
-
-    auto draftNote = std::make_unique<DraftNote>(title.utfValue, description.utfValue);
     auto repository = (InMemoryNoteRepository *) handle;
-    repository->insert(*draftNote);
+
+    auto draftNote = jni::mapToNative<DraftNote>(env, jDraftNote);
+    repository->insert(draftNote);
 
     log::debug("Insert note");
 }
@@ -67,14 +64,10 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_update(
     jint noteId,
     jobject jDraftNote
 ) {
-    jclass draftNoteClass = env->GetObjectClass(jDraftNote);
-
-    auto title = jni_util::findStringField(env, jDraftNote, draftNoteClass, "title");
-    auto description = jni_util::findStringField(env, jDraftNote, draftNoteClass, "description");
-
-    auto draftNote = std::make_unique<DraftNote>(title.utfValue, description.utfValue);
     auto repository = (InMemoryNoteRepository *) handle;
-    repository->update(noteId, *draftNote);
+
+    auto draftNote = jni::mapToNative<DraftNote>(env, jDraftNote);
+    repository->update(noteId, draftNote);
 
     log::debug("Update note");
 }
@@ -88,22 +81,14 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_getAll(
     auto repository = (InMemoryNoteRepository *) handle;
     auto notes = repository->getAll();
 
-    jclass noteClass = jni_util::findClass(env, "com/fondesa/androidnativebasedsample/Note");
-    jmethodID noteConstructorId = jni_util::findConstructor(env,
-                                                            noteClass,
-                                                            "(ILjava/lang/String;Ljava/lang/String;)V");
+    jclass noteClass = jni::findClass(env, "com/fondesa/androidnativebasedsample/Note");
+    jmethodID noteConstructorId = jni::findConstructor(env,
+                                                       noteClass,
+                                                       "(ILjava/lang/String;Ljava/lang/String;)V");
 
     auto mapper = [&](std::shared_ptr<Note> note) {
-        jint noteId = note->getId();
-        jstring noteTitle = env->NewStringUTF(note->getTitle().c_str());
-        jstring noteDescription = env->NewStringUTF(note->getDescription().c_str());
-
-        return env->NewObject(noteClass,
-                              noteConstructorId,
-                              noteId,
-                              noteTitle,
-                              noteDescription);
+        return jni::mapFromNative<Note>(env, *note, noteClass, noteConstructorId);
     };
-    return jni_util::jArrayFromVector<std::shared_ptr<Note>>(env, noteClass, notes, mapper);
+    return jni::jArrayFromVector<std::shared_ptr<Note>>(env, noteClass, notes, mapper);
 }
 }
