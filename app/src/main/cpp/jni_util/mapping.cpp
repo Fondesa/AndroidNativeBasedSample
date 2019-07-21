@@ -6,13 +6,12 @@
 
 namespace jni {
 
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "performance-unnecessary-value-param"
 template<>
 jobject mapFromNative<Note>(JNIEnv *env, Note obj, jclass cls, jmethodID constructor) {
-    jint noteId = obj.getId();
-    jstring noteTitle = env->NewStringUTF(obj.getTitle().c_str());
-    jstring noteDescription = env->NewStringUTF(obj.getDescription().c_str());
+    auto note = std::move(obj);
+    jint noteId = note.getId();
+    jstring noteTitle = env->NewStringUTF(note.getTitle().c_str());
+    jstring noteDescription = env->NewStringUTF(note.getDescription().c_str());
 
     return env->NewObject(cls,
                           constructor,
@@ -20,7 +19,6 @@ jobject mapFromNative<Note>(JNIEnv *env, Note obj, jclass cls, jmethodID constru
                           noteTitle,
                           noteDescription);
 }
-#pragma clang diagnostic pop
 
 template<>
 DraftNote mapToNative(JNIEnv *env, jobject obj) {
