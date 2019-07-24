@@ -1,10 +1,13 @@
 #include <jni.h>
 #include <string>
-#include "in_memory_note_repository.hpp"
+#include "database_note_repository.hpp"
+#include "database.hpp"
+#include "database_factory.hpp"
 #include "foo.hpp"
 #include "log/log.hpp"
 #include "jni_util/jclass_util.hpp"
 #include "jni_util/mapping.hpp"
+#include "jni_util/pointer_wrapper.hpp"
 
 extern "C" {
 JNIEXPORT jstring JNICALL
@@ -22,12 +25,22 @@ Java_com_fondesa_androidnativebasedsample_Foo_foo(
 JNIEXPORT jlong JNICALL
 Java_com_fondesa_androidnativebasedsample_NoteRepository_initialize(
     JNIEnv *env,
-    jobject /* this */
+    jobject /* this */,
+    jstring dbPath
 ) {
-    auto repository = std::make_unique<InMemoryNoteRepository>();
-    // Obtain the stored pointer and release ownership over it.
-    auto repositoryHandle = repository.release();
-    return reinterpret_cast<jlong>(repositoryHandle);
+    jboolean isCopy = JNI_TRUE;
+    const char *utfDbPath = env->GetStringUTFChars(dbPath, &isCopy);
+    std::string stdDbPath = std::string(utfDbPath);
+
+    // TODO: move to native
+    std::shared_ptr<Database> db = DatabaseFactory::createDatabase(stdDbPath);
+    auto createTableStmt = db->createStatement("CREATE TABLE IF NOT EXISTS notes ("
+                                               "title TEXT NOT NULL, "
+                                               "description TEXT NOT NULL"
+                                               ")");
+    createTableStmt->execute<void>();
+
+    return jni::PointerWrapper<DatabaseNoteRepository>::make(db)->address();
 }
 
 JNIEXPORT void JNICALL
@@ -37,7 +50,8 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_remove(
     jlong handle,
     jint id
 ) {
-    auto repository = (InMemoryNoteRepository *) handle;
+    auto repository = jni::PointerWrapper<NoteRepository>::get(handle);
+
     repository->remove(id);
 }
 
@@ -48,7 +62,7 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_insert(
     jlong handle,
     jobject jDraftNote
 ) {
-    auto repository = (InMemoryNoteRepository *) handle;
+    auto repository = jni::PointerWrapper<NoteRepository>::get(handle);
 
     auto draftNote = jni::mapToNative<DraftNote>(env, jDraftNote);
     repository->insert(draftNote);
@@ -64,7 +78,7 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_update(
     jint noteId,
     jobject jDraftNote
 ) {
-    auto repository = (InMemoryNoteRepository *) handle;
+    auto repository = jni::PointerWrapper<NoteRepository>::get(handle);
 
     auto draftNote = jni::mapToNative<DraftNote>(env, jDraftNote);
     repository->update(noteId, draftNote);
@@ -78,7 +92,8 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_getAll(
     jobject /* this */,
     jlong handle
 ) {
-    auto repository = (InMemoryNoteRepository *) handle;
+    auto repository = jni::PointerWrapper<NoteRepository>::get(handle);
+
     auto notes = repository->getAll();
 
     jclass noteClass = jni::findClass(env, "com/fondesa/androidnativebasedsample/Note");

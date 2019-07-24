@@ -1,8 +1,8 @@
 package com.fondesa.androidnativebasedsample
 
-class NoteRepository {
+class NoteRepository(dbPath: String) {
 
-    private val repositoryHandle = initialize()
+    private val repositoryHandle = initialize(dbPath)
 
     fun remove(noteId: Int) = remove(repositoryHandle, noteId)
 
@@ -12,7 +12,7 @@ class NoteRepository {
 
     fun getAll(): List<Note> = getAll(repositoryHandle).toList()
 
-    private external fun initialize(): Long
+    private external fun initialize(dbPath: String): Long
 
     private external fun remove(handle: Long, noteId: Int)
 

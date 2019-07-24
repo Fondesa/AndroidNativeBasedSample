@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         val output = Foo.foo(input)
         textView.text = output
 
-        val repository = NoteRepository()
+        val repository = NoteRepository(filesDir.absolutePath + "/notes.db")
         repository.insert(DraftNote("first-title", "first-description"))
         repository.insert(DraftNote("second-title", "second-description"))
         val notes = repository.getAll()
@@ -23,7 +23,7 @@ class MainActivity : AppCompatActivity() {
             DraftNote("updated-second-title", "updated-second-description")
         )
         val notesAfterUpdate = repository.getAll()
-        repository.remove(0)
+        repository.remove(notes[0].id)
         val notesAfterRemove = repository.getAll()
     }
 }
