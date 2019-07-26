@@ -1,7 +1,7 @@
 #include "string_field.hpp"
 #include "../log/log.hpp"
 
-namespace jni {
+namespace Jni {
 
 StringField::StringField(JNIEnv *env, jstring jvalue) {
     this->env = env;

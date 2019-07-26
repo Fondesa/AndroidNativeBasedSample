@@ -4,7 +4,7 @@
 #include "mapping.hpp"
 #include "jclass_util.hpp"
 
-namespace jni {
+namespace Jni {
 
 template<>
 jobject mapFromNative<Note>(JNIEnv *env, Note obj, jclass cls, jmethodID constructor) {
@@ -24,8 +24,8 @@ template<>
 DraftNote mapToNative(JNIEnv *env, jobject obj) {
     jclass draftNoteClass = env->GetObjectClass(obj);
 
-    auto title = jni::findStringField(env, obj, draftNoteClass, "title");
-    auto description = jni::findStringField(env, obj, draftNoteClass, "description");
+    auto title = Jni::findStringField(env, obj, draftNoteClass, "title");
+    auto description = Jni::findStringField(env, obj, draftNoteClass, "description");
 
     return DraftNote(title.utfValue, description.utfValue);
 }

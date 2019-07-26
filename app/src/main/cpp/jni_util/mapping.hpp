@@ -2,7 +2,7 @@
 
 #include <jni.h>
 
-namespace jni {
+namespace Jni {
 
 template<typename T>
 jobject mapFromNative(JNIEnv *env, T obj, jclass cls, jmethodID constructor);

@@ -4,7 +4,7 @@
 #include <vector>
 #include "string_field.hpp"
 
-namespace jni {
+namespace Jni {
 
 StringField findStringField(JNIEnv *env, jobject obj, jclass cls, const char *fieldName);
 

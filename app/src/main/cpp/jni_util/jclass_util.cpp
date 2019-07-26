@@ -2,7 +2,7 @@
 #include <note.hpp>
 #include "jclass_util.hpp"
 
-namespace jni {
+namespace Jni {
 
 StringField findStringField(JNIEnv *env, jobject obj, jclass cls, const char *fieldName) {
     jfieldID fieldId = env->GetFieldID(cls, fieldName, "Ljava/lang/String;");
@@ -58,7 +58,7 @@ jobjectArray jArrayFromVector(
 /**
  * Dedicated namespace for explicit templates specialization.
  */
-namespace jni {
+namespace Jni {
 
 template jobjectArray jArrayFromVector<Note>(
     JNIEnv *env,

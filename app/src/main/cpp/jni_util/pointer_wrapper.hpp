@@ -3,7 +3,7 @@
 #include <memory>
 #include <jni.h>
 
-namespace jni {
+namespace Jni {
 
 template<typename T>
 class PointerWrapper {

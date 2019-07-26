@@ -2,7 +2,7 @@
 
 #include <jni.h>
 
-namespace jni {
+namespace Jni {
 
 class StringField {
    public:
