@@ -1,7 +1,6 @@
 #include <jni.h>
 #include <string>
 #include "database_note_repository.hpp"
-#include "database.hpp"
 #include "database_client.hpp"
 #include "note_database_initializer.hpp"
 #include "foo.hpp"
@@ -23,8 +22,9 @@ Java_com_fondesa_androidnativebasedsample_Foo_foo(
     std::string output = foo->getValue();
     return env->NewStringUTF(output.c_str());
 }
-JNIEXPORT jlong JNICALL
-Java_com_fondesa_androidnativebasedsample_NoteRepository_initialize(
+
+JNIEXPORT void JNICALL
+Java_com_fondesa_androidnativebasedsample_App_initializeDatabase(
     JNIEnv *env,
     jobject /* this */,
     jstring dbPath
@@ -34,7 +34,13 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_initialize(
     std::string stdDbPath = std::string(utfDbPath);
 
     NoteDb::initialize(stdDbPath);
+}
 
+JNIEXPORT jlong JNICALL
+Java_com_fondesa_androidnativebasedsample_NoteRepository_getRepositoryHandle(
+    JNIEnv *env,
+    jobject /* this */
+) {
     auto db = Db::Client::get();
     return Jni::PointerWrapper<DatabaseNoteRepository>::make(db)->address();
 }

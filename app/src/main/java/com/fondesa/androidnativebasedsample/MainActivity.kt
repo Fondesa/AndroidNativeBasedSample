@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
         val output = Foo.foo(input)
         textView.text = output
 
-        val repository = NoteRepository(filesDir.absolutePath + "/notes.db")
+        val repository = NoteRepository()
         repository.insert(DraftNote("first-title", "first-description"))
         repository.insert(DraftNote("second-title", "second-description"))
         val notes = repository.getAll()
