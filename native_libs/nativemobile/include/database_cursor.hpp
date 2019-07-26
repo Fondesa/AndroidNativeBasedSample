@@ -2,7 +2,9 @@
 
 #include <string>
 
-class DatabaseCursor {
+namespace Db {
+
+class Cursor {
    public:
     virtual bool next() = 0;
 
@@ -20,3 +22,4 @@ class DatabaseCursor {
 
     virtual bool getBool(int colIndex) = 0;
 };
+}

@@ -2,7 +2,8 @@
 #include <string>
 #include "database_note_repository.hpp"
 #include "database.hpp"
-#include "database_factory.hpp"
+#include "database_client.hpp"
+#include "note_database_initializer.hpp"
 #include "foo.hpp"
 #include "log/log.hpp"
 #include "jni_util/jclass_util.hpp"
@@ -32,14 +33,9 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_initialize(
     const char *utfDbPath = env->GetStringUTFChars(dbPath, &isCopy);
     std::string stdDbPath = std::string(utfDbPath);
 
-    // TODO: move to native
-    std::shared_ptr<Database> db = DatabaseFactory::createDatabase(stdDbPath);
-    auto createTableStmt = db->createStatement("CREATE TABLE IF NOT EXISTS notes ("
-                                               "title TEXT NOT NULL, "
-                                               "description TEXT NOT NULL"
-                                               ")");
-    createTableStmt->execute<void>();
+    NoteDb::initialize(stdDbPath);
 
+    auto db = Db::Client::get();
     return jni::PointerWrapper<DatabaseNoteRepository>::make(db)->address();
 }
 
