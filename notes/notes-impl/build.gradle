@@ -7,6 +7,7 @@ dependencies {
     api project(':core:core-api')
     api project(':notes:notes-api')
     api project(':thread:thread-api')
+    api project(':ui:ui-api')
     api deps.androidConstraintLayout
     api deps.androidDesign
     api deps.daggerAndroid

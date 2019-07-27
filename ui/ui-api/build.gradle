@@ -1,0 +1,10 @@
+apply plugin: 'com.android.library'
+apply plugin: 'common-android'
+
+dependencies {
+    compileOnly deps.javaxInject
+
+    api deps.androidAppCompat
+    api deps.androidAnnotation
+    api deps.androidRecyclerView
+}

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources>
+    <dimen name="radius_lg">8dp</dimen>
+    <dimen name="radius_md">4dp</dimen>
+    <dimen name="space_lg">16dp</dimen>
+    <dimen name="space_md">8dp</dimen>
+    <dimen name="space_sm">4dp</dimen>
+    <dimen name="stroke_sm">1dp</dimen>
+    <dimen name="text_lg">20sp</dimen>
+    <dimen name="text_md">16sp</dimen>
+    <dimen name="text_sm">14sp</dimen>
+</resources>

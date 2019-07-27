@@ -22,6 +22,7 @@ dependencies {
     implementation project(':native')
     implementation project(':notes:notes-di')
     implementation project(':thread:thread-di')
+    implementation project(':ui:ui-api')
     implementation deps.multiDex
     implementation deps.daggerAndroid
 
