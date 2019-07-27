@@ -1,5 +1,8 @@
 include ':app'
 include ':core:core-api'
+include ':log:log-api'
+include ':log:log-di'
+include ':log:log-impl'
 include ':testing:testing-android'
 include ':testing:testing-jvm'
 include ':thread:thread-api'
