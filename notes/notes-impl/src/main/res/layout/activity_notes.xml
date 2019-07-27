@@ -20,12 +20,29 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.fondesa.notes.ui.api.view.DimBackgroundView
+        android:id="@+id/dimBackgroundView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <com.fondesa.notes.ui.api.view.ElevationView
+        android:id="@+id/elevationView"
+        android:layout_width="match_parent"
+        android:layout_height="16dp"
+        android:visibility="invisible"
+        app:layout_anchor="@+id/insertNoteContainer" />
+
+    <include
+        layout="@layout/sheet_insert_note"
+        android:clipToPadding="false" />
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/buttonAdd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/space_lg"
         app:fabSize="normal"
-        app:srcCompat="@drawable/ic_add" />
+        app:layout_anchor="@+id/insertNoteContainer"
+        app:layout_anchorGravity="top|end"
+        tools:src="@drawable/ic_add" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

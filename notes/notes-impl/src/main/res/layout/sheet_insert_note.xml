@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/insertNoteContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/space_lg"
+    android:paddingRight="@dimen/space_lg"
+    app:behavior_hideable="true"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <EditText
+        android:id="@+id/titleTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_lg"
+        android:background="@null"
+        android:hint="@string/hint_title"
+        android:inputType="textMultiLine"
+        android:textColor="?android:textColorPrimary"
+        android:textSize="@dimen/text_lg"
+        android:textStyle="bold"
+        tools:ignore="Autofill"
+        tools:text="Dummy title" />
+
+    <EditText
+        android:id="@+id/descriptionTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_md"
+        android:layout_marginBottom="@dimen/space_lg"
+        android:background="@null"
+        android:hint="@string/hint_description"
+        android:inputType="textMultiLine"
+        android:textColor="?android:textColorSecondary"
+        android:textSize="@dimen/text_md"
+        tools:ignore="Autofill"
+        tools:text="Dummy description" />
+
+</LinearLayout>

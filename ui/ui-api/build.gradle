@@ -5,6 +5,7 @@ dependencies {
     compileOnly deps.javaxInject
 
     api deps.androidAppCompat
+    api deps.androidDesign
     api deps.androidAnnotation
     api deps.androidRecyclerView
 }
