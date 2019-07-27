@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION 3.10)
 
+set(PROJECT_NAME notes-native)
 set(PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/..)
 
 add_library(native_mobile_lib SHARED IMPORTED)
@@ -14,12 +15,12 @@ set(SOURCE_FILES
         log/log.cpp
         )
 
-add_library(jni-wrapper SHARED ${SOURCE_FILES})
+add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
-target_include_directories(jni-wrapper PRIVATE ${PROJECT_DIR}/libs/nativemobile/include)
+target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_DIR}/libs/nativemobile/include)
 
 target_link_libraries(
-        jni-wrapper
+        ${PROJECT_NAME}
         native_mobile_lib
         log
 )

@@ -56,7 +56,7 @@ class App : DaggerApplication() {
 
     companion object {
         init {
-            System.loadLibrary("jni-wrapper")
+            System.loadLibrary("notes-native")
         }
     }
 }
