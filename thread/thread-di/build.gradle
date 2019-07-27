@@ -1,0 +1,10 @@
+apply plugin: 'com.android.library'
+apply plugin: 'common-android'
+
+dependencies {
+    api project(":thread:thread-impl")
+
+    api deps.dagger
+
+    kapt deps.daggerCompiler
+}

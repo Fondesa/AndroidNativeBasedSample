@@ -1,1 +1,4 @@
 include ':app'
+include ':thread:thread-api'
+include ':thread:thread-di'
+include ':thread:thread-impl'

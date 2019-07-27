@@ -12,6 +12,7 @@ class CommonAndroidPlugin implements Plugin<Project> {
     @Override
     void apply(Project target) {
         target.with {
+            apply from: "${target.rootDir.absolutePath}/android-config.gradle"
             apply plugin: 'kotlin-android'
             apply plugin: 'kotlin-kapt'
             apply plugin: 'kotlin-android-extensions'

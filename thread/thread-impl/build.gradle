@@ -1,0 +1,9 @@
+apply plugin: 'com.android.library'
+apply plugin: 'common-android'
+
+dependencies {
+    compileOnly deps.javaxInject
+
+    api project(":thread:thread-api")
+    api deps.coroutinesAndroid
+}
