@@ -1,4 +1,4 @@
-package com.fondesa.androidnativebasedsample
+package com.fondesa.notes
 
 /**
  * Created by antoniolig on 2019-07-07.

@@ -1,16 +1,11 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'common-android'
 
 android {
-    compileSdkVersion 28
     defaultConfig {
-        applicationId "com.fondesa.androidnativebasedsample"
-        minSdkVersion 14
-        targetSdkVersion 28
+        applicationId "com.fondesa.notes"
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         externalNativeBuild {
             cmake {
                 cppFlags "-std=c++17"
@@ -20,12 +15,14 @@ android {
             abiFilters 'armeabi-v7a', 'arm64-v8a', 'x86', 'x86_64'
         }
     }
+
     buildTypes {
         release {
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
     externalNativeBuild {
         cmake {
             path "src/main/cpp/CMakeLists.txt"
@@ -40,11 +37,21 @@ android {
 }
 
 dependencies {
-    implementation deps.kotlinStdLib
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'androidx.core:core-ktx:1.0.2'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation project(':core:core-api')
+    implementation project(':log:log-di')
+    implementation project(':notes:notes-di')
+    implementation project(':thread:thread-di')
+    implementation deps.multiDex
+    implementation deps.daggerAndroid
+
+    // Used to monitor the memory leaks in the app.
+    // On the debug version it will install an additional apk with information on leaks.
+    // The dependency that ends with "-no-op" disables the leak monitoring.
+    testImplementation deps.leakCanaryNoOp
+    androidTestImplementation deps.leakCanaryNoOp
+    debugImplementation deps.leakCanary
+    releaseImplementation deps.leakCanaryNoOp
+
+    kapt deps.daggerCompiler
+    kapt deps.daggerAndroidProcessor
 }

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.fondesa.androidnativebasedsample">
+    package="com.fondesa.notes">
 
     <application
-        android:name=".App"
+        android:name="com.fondesa.notes.App"
         android:allowBackup="true"
         android:fullBackupContent="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".MainActivity">
+        <activity android:name="com.fondesa.notes.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

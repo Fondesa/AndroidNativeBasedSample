@@ -1,4 +1,4 @@
-package com.fondesa.androidnativebasedsample
+package com.fondesa.notes
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

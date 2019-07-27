@@ -11,7 +11,7 @@
 
 extern "C" {
 JNIEXPORT jstring JNICALL
-Java_com_fondesa_androidnativebasedsample_Foo_foo(
+Java_com_fondesa_notes_Foo_foo(
     JNIEnv *env,
     jobject /* this */,
     jstring input) {
@@ -24,7 +24,7 @@ Java_com_fondesa_androidnativebasedsample_Foo_foo(
 }
 
 JNIEXPORT void JNICALL
-Java_com_fondesa_androidnativebasedsample_App_initializeDatabase(
+Java_com_fondesa_notes_App_initializeDatabase(
     JNIEnv *env,
     jobject /* this */,
     jstring dbPath
@@ -37,7 +37,7 @@ Java_com_fondesa_androidnativebasedsample_App_initializeDatabase(
 }
 
 JNIEXPORT jlong JNICALL
-Java_com_fondesa_androidnativebasedsample_NoteRepository_getRepositoryHandle(
+Java_com_fondesa_notes_NoteRepository_getRepositoryHandle(
     JNIEnv *env,
     jobject /* this */
 ) {
@@ -46,7 +46,7 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_getRepositoryHandle(
 }
 
 JNIEXPORT void JNICALL
-Java_com_fondesa_androidnativebasedsample_NoteRepository_remove(
+Java_com_fondesa_notes_NoteRepository_remove(
     JNIEnv *env,
     jobject /* this */,
     jlong handle,
@@ -58,7 +58,7 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_remove(
 }
 
 JNIEXPORT void JNICALL
-Java_com_fondesa_androidnativebasedsample_NoteRepository_insert(
+Java_com_fondesa_notes_NoteRepository_insert(
     JNIEnv *env,
     jobject /* this */,
     jlong handle,
@@ -73,7 +73,7 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_insert(
 }
 
 JNIEXPORT void JNICALL
-Java_com_fondesa_androidnativebasedsample_NoteRepository_update(
+Java_com_fondesa_notes_NoteRepository_update(
     JNIEnv *env,
     jobject /* this */,
     jlong handle,
@@ -89,7 +89,7 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_update(
 }
 
 JNIEXPORT jobjectArray JNICALL
-Java_com_fondesa_androidnativebasedsample_NoteRepository_getAll(
+Java_com_fondesa_notes_NoteRepository_getAll(
     JNIEnv *env,
     jobject /* this */,
     jlong handle
@@ -98,7 +98,7 @@ Java_com_fondesa_androidnativebasedsample_NoteRepository_getAll(
 
     auto notes = repository->getAll();
 
-    jclass noteClass = Jni::findClass(env, "com/fondesa/androidnativebasedsample/Note");
+    jclass noteClass = Jni::findClass(env, "com/fondesa/notes/Note");
     jmethodID noteConstructorId = Jni::findConstructor(env,
                                                        noteClass,
                                                        "(ILjava/lang/String;Ljava/lang/String;)V");
