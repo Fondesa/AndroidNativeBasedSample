@@ -1,15 +1,14 @@
-package com.fondesa.notes
+package com.fondesa.notes.notes.impl
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.fondesa.notes.notes.api.DraftNote
-import com.fondesa.notes.notes.impl.NativeNotesRepository
 
-class MainActivity : AppCompatActivity() {
+class NotesActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_notes)
 
         val repository = NativeNotesRepository()
         repository.insert(
