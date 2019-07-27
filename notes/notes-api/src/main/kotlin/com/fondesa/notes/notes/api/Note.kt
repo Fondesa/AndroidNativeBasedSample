@@ -1,4 +1,4 @@
-package com.fondesa.notes
+package com.fondesa.notes.notes.api
 
 data class Note(
     val id: Int,

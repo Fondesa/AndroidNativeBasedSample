@@ -4,6 +4,7 @@ apply plugin: 'common-android'
 dependencies {
     compileOnly deps.javaxInject
 
+    api project(':core:core-api')
     api project(':notes:notes-api')
     api project(':thread:thread-api')
     api deps.androidConstraintLayout
