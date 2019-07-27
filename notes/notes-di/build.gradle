@@ -1,0 +1,9 @@
+apply plugin: 'com.android.library'
+apply plugin: 'common-android'
+
+dependencies {
+    api project(":notes:notes-impl")
+
+    kapt deps.daggerAndroidProcessor
+    kapt deps.daggerCompiler
+}

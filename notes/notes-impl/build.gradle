@@ -1,0 +1,24 @@
+apply plugin: 'com.android.library'
+apply plugin: 'common-android'
+
+dependencies {
+    compileOnly deps.javaxInject
+
+    api project(':notes:notes-api')
+    api project(':thread:thread-api')
+    api deps.androidConstraintLayout
+    api deps.androidDesign
+    api deps.daggerAndroid
+
+    implementation deps.autoFactory
+
+    testImplementation project(':testing:testing-jvm')
+
+    androidTestImplementation project(':testing:testing-android')
+    androidTestImplementation(deps.espresso) {
+        exclude group: "com.google.code.findbugs", module: "jsr305"
+    }
+
+    kapt deps.autoFactory
+    annotationProcessor deps.autoFactory
+}
