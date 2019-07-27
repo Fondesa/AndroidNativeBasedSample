@@ -1,0 +1,5 @@
+ext.androidConfig = [
+        compileSdk: 28,
+        minSdk    : 14,
+        targetSdk : 28
+]
