@@ -5,9 +5,9 @@
 #include "note_database_initializer.hpp"
 #include "foo.hpp"
 #include "log/log.hpp"
-#include "jni_util/jclass_util.hpp"
-#include "jni_util/mapping.hpp"
-#include "jni_util/pointer_wrapper.hpp"
+#include "util/jclass_util.hpp"
+#include "util/mapping.hpp"
+#include "util/pointer_wrapper.hpp"
 
 extern "C" {
 

@@ -7,10 +7,10 @@ set_target_properties(native_mobile_lib PROPERTIES IMPORTED_LOCATION
         ${PROJECT_DIR}/libs/nativemobile/${ANDROID_ABI}/libnativemobile.so)
 
 set(SOURCE_FILES
-        jni_wrapper.cpp
-        jni_util/jclass_util.cpp
-        jni_util/string_field.cpp
-        jni_util/mapping.cpp
+        export.cpp
+        util/jclass_util.cpp
+        util/string_field.cpp
+        util/mapping.cpp
         log/log.cpp
         )
 
