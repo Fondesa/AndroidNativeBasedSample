@@ -32,15 +32,6 @@ android {
             version "3.10.2"
         }
     }
-    sourceSets {
-        main {
-            def prebuiltLibs = rootProject.properties["prebuilt_libs"] ?: System.getenv("PREBUILT_LIBS")
-            if (prebuiltLibs == null) {
-                throw IllegalArgumentException("You should specify the prebuilt libs path")
-            }
-            jniLibs.srcDirs = ["$prebuiltLibs/nativemobile/android"]
-        }
-    }
 }
 
 dependencies {

@@ -1,0 +1,7 @@
+apply plugin: 'common-jvm'
+
+dependencies {
+    compile project(":thread:thread-api")
+    compile deps.jUnit
+    compile deps.mockitoKotlin
+}
