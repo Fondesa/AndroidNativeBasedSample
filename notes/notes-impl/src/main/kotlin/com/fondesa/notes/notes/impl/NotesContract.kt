@@ -1,10 +1,10 @@
 package com.fondesa.notes.notes.impl
 
-import com.fondesa.je.restaurantlist.api.Restaurant
-import com.fondesa.je.ui.api.mvp.BasePresenter
+import com.fondesa.notes.notes.api.Note
+import com.fondesa.notes.ui.api.mvp.BasePresenter
 
 /**
- * Contract between the view and the presenter for the restaurant list screen.
+ * Contract between the view and the presenter for the note list screen.
  */
 object NotesContract {
 
@@ -14,75 +14,35 @@ object NotesContract {
     interface View {
 
         /**
-         * Shows the progress indicator.
-         */
-        fun showProgressIndicator()
-
-        /**
-         * Hides the progress indicator.
-         */
-        fun hideProgressIndicator()
-
-        /**
-         * Shows the container of the restaurants.
+         * Shows the container of the notes.
          */
         fun showListContainer()
 
         /**
-         * Hides the container of the restaurants.
+         * Hides the container of the notes.
          */
         fun hideListContainer()
 
         /**
-         * Shows an error to the user for the given cause.
-         *
-         * @param cause the cause of the error.
-         */
-        fun showErrorForCause(cause: ErrorCause)
-
-        /**
-         * Shows the view which indicates there are no restaurants available for the given postcode.
+         * Shows the view which indicates there are no notes inserted by the user.
          */
         fun showZeroElementsView()
 
         /**
-         * Hides the view which indicates there are no restaurants available for the given postcode.
+         * Hides the view which indicates there are no notes inserted by the user.
          */
         fun hideZeroElementsView()
 
         /**
-         * Enables the user input in the postcode field.
-         */
-        fun enablePostcodeInput()
-
-        /**
-         * Disables the user input in the postcode field.
-         */
-        fun disablePostcodeInput()
-
-        /**
-         * Enables the user click on the search button.
-         */
-        fun enableSearchAction()
-
-        /**
-         * Disables the user click on the search button.
-         */
-        fun disableSearchAction()
-
-        /**
-         * Updates the current list of restaurants with the given one.
+         * Updates the current list of notes with the given one.
          *
-         * @param restaurantList the new list of restaurants which should be shown.
+         * @param noteList the new list of notes which should be shown.
          */
-        fun showRestaurantList(restaurantList: List<Restaurant>)
+        fun showNoteList(noteList: List<Note>)
 
-        /**
-         * Updates the postcode inside the related input field.
-         *
-         * @param postcode the new postcode which should be inserted in the input field.
-         */
-        fun showDefaultPostcode(postcode: String)
+        fun showInsertNoteScreen()
+
+        fun hideInsertNoteScreen()
     }
 
     /**
@@ -90,32 +50,8 @@ object NotesContract {
      */
     interface Presenter : BasePresenter {
 
-        /**
-         * Invoked when the user edits the postcode in the input field.
-         *
-         * @param text the new postcode.
-         */
-        fun postcodeEdited(text: String)
+        fun addButtonClicked()
 
-        /**
-         * Invoked when the user clicks on the search button.
-         */
-        fun searchClicked()
-    }
-
-    /**
-     * Defines all the causes which can bring to an error.
-     */
-    enum class ErrorCause {
-
-        /**
-         * Identifies an error related to the network.
-         */
-        NETWORK,
-
-        /**
-         * Identifies a generic error.
-         */
-        GENERIC
+        fun doneButtonClicked()
     }
 }

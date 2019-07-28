@@ -1,38 +1,54 @@
 package com.fondesa.notes.notes.impl
 
-import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.fondesa.notes.notes.api.DraftNote
+import com.fondesa.notes.notes.api.Note
+import com.fondesa.notes.ui.api.view.BottomSheetVisibleCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_notes.*
 import kotlinx.android.synthetic.main.sheet_insert_note.*
+import javax.inject.Inject
 
-class NotesActivity : AppCompatActivity() {
+class NotesActivity : AppCompatActivity(),
+    NotesContract.View,
+    BottomSheetVisibleCallback.Listener {
+
+    @Inject
+    internal lateinit var presenter: NotesContract.Presenter
+
+    @Inject
+    internal lateinit var adapter: NoteRecyclerViewAdapter
 
     private val noteSheet by lazy { BottomSheetBehavior.from(insertNoteContainer) }
     private val drawableAdd by lazy { ContextCompat.getDrawable(this, R.drawable.ic_add) }
     private val drawableDone by lazy { ContextCompat.getDrawable(this, R.drawable.ic_done) }
-    private var sheetPreviouslyHidden = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notes)
 
         noteSheet.state = BottomSheetBehavior.STATE_HIDDEN
-        noteSheet.setBottomSheetCallback(BottomSheetCallback())
+        noteSheet.setBottomSheetCallback(BottomSheetVisibleCallback(this))
 
         buttonAdd.setImageDrawable(drawableAdd)
         buttonAdd.setOnClickListener {
             val state = noteSheet.state
             if (state == BottomSheetBehavior.STATE_COLLAPSED) {
-                onDoneButtonClick()
+                presenter.doneButtonClicked()
             } else if (state == BottomSheetBehavior.STATE_HIDDEN) {
-                onAddButtonClick()
+                presenter.addButtonClicked()
             }
         }
+
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        // Set the adapter on the RecyclerView.
+        recyclerView.adapter = adapter
 
         val repository = NativeNotesRepository()
         repository.insert(
@@ -58,47 +74,47 @@ class NotesActivity : AppCompatActivity() {
         val notesAfterUpdate = repository.getAll()
         repository.remove(notes[0].id)
         val notesAfterRemove = repository.getAll()
+
+        presenter.attach()
     }
 
-    private fun onAddButtonClick() {
+    override fun showListContainer() {
+        recyclerView.visibility = View.VISIBLE
+    }
+
+    override fun hideListContainer() {
+        recyclerView.visibility = View.INVISIBLE
+    }
+
+    override fun showZeroElementsView() {
+        zeroElementsTextView.visibility = View.VISIBLE
+    }
+
+    override fun hideZeroElementsView() {
+        zeroElementsTextView.visibility = View.INVISIBLE
+    }
+
+    override fun showNoteList(noteList: List<Note>) {
+        adapter.updateList(noteList)
+    }
+
+    override fun showInsertNoteScreen() {
         noteSheet.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
-    private fun onDoneButtonClick() {
+    override fun hideInsertNoteScreen() {
         noteSheet.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
-    private fun onBottomSheetHidden() {
+    override fun onBottomSheetHidden() {
         dimBackgroundView.hide()
         elevationView.visibility = View.INVISIBLE
         buttonAdd.setImageDrawable(drawableAdd)
     }
 
-    private fun onBottomSheetShown() {
+    override fun onBottomSheetShown() {
         dimBackgroundView.show()
         elevationView.visibility = View.VISIBLE
         buttonAdd.setImageDrawable(drawableDone)
-    }
-
-    private inner class BottomSheetCallback : BottomSheetBehavior.BottomSheetCallback() {
-
-        override fun onSlide(view: View, slideOffset: Float) {
-
-        }
-
-        @SuppressLint("SwitchIntDef")
-        override fun onStateChanged(view: View, state: Int) {
-            when {
-                state == BottomSheetBehavior.STATE_HIDDEN && !sheetPreviouslyHidden -> {
-                    onBottomSheetHidden()
-                    sheetPreviouslyHidden = true
-                }
-
-                state != BottomSheetBehavior.STATE_HIDDEN && sheetPreviouslyHidden -> {
-                    onBottomSheetShown()
-                    sheetPreviouslyHidden = false
-                }
-            }
-        }
     }
 }
