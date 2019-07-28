@@ -1,4 +1,5 @@
 def androidConstraintLayout = '1.1.3'
+def androidDesign = '1.1.0-alpha08'
 def androidPlugin = '3.4.2'
 def androidSupport = '1.0.0'
 def androidTestRules = '1.2.0'
@@ -25,7 +26,7 @@ ext.deps = [
         androidAnnotation        : "androidx.annotation:annotation:$androidSupport",
         androidAppCompat         : "androidx.appcompat:appcompat:$androidSupport",
         androidConstraintLayout  : "androidx.constraintlayout:constraintlayout:$androidConstraintLayout",
-        androidDesign            : "com.google.android.material:material:$androidSupport",
+        androidDesign            : "com.google.android.material:material:$androidDesign",
         androidLegacySupportV4   : "androidx.legacy:legacy-support-v4:$androidSupport",
         androidRecyclerView      : "androidx.recyclerview:recyclerview:$androidSupport",
         androidTestOrchestrator  : "androidx.test:orchestrator:$androidTestOrchestrator",

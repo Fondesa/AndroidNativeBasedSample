@@ -63,6 +63,10 @@ class CommonAndroidPlugin implements Plugin<Project> {
                 }
             }
 
+            configurations {
+                all*.exclude group: 'com.google.guava', module: 'listenablefuture'
+            }
+
             dependencies {
                 implementation deps.kotlinStdLib
                 androidTestUtil deps.androidTestOrchestrator

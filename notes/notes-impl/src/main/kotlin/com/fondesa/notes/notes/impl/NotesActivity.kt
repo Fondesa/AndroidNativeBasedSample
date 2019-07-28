@@ -3,7 +3,6 @@ package com.fondesa.notes.notes.impl
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.fondesa.notes.notes.api.DraftNote
 import com.fondesa.notes.notes.api.Note
@@ -25,8 +24,6 @@ class NotesActivity : AppCompatActivity(),
     internal lateinit var adapter: NoteRecyclerViewAdapter
 
     private val noteSheet by lazy { BottomSheetBehavior.from(insertNoteContainer) }
-    private val drawableAdd by lazy { ContextCompat.getDrawable(this, R.drawable.ic_add) }
-    private val drawableDone by lazy { ContextCompat.getDrawable(this, R.drawable.ic_done) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -36,14 +33,16 @@ class NotesActivity : AppCompatActivity(),
         noteSheet.state = BottomSheetBehavior.STATE_HIDDEN
         noteSheet.setBottomSheetCallback(BottomSheetVisibleCallback(this))
 
-        buttonAdd.setImageDrawable(drawableAdd)
-        buttonAdd.setOnClickListener {
-            val state = noteSheet.state
-            if (state == BottomSheetBehavior.STATE_COLLAPSED) {
-                presenter.doneButtonClicked()
-            } else if (state == BottomSheetBehavior.STATE_HIDDEN) {
-                presenter.addButtonClicked()
-            }
+        noteActionButton.setOnAddClickListener {
+            presenter.addButtonClicked()
+        }
+
+        noteActionButton.setOnDoneClickListener {
+            presenter.doneButtonClicked()
+        }
+
+        noteActionButton.setOnCancelClickListener {
+
         }
 
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
@@ -109,12 +108,12 @@ class NotesActivity : AppCompatActivity(),
     override fun onBottomSheetHidden() {
         dimBackgroundView.hide()
         elevationView.visibility = View.INVISIBLE
-        buttonAdd.setImageDrawable(drawableAdd)
+        noteActionButton.state = NoteFloatingActionButton.State.ADD
     }
 
     override fun onBottomSheetShown() {
         dimBackgroundView.show()
         elevationView.visibility = View.VISIBLE
-        buttonAdd.setImageDrawable(drawableDone)
+        noteActionButton.state = NoteFloatingActionButton.State.DONE
     }
 }
