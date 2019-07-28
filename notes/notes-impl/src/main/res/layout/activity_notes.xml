@@ -52,7 +52,10 @@
         android:visibility="invisible"
         app:layout_anchor="@+id/insertNoteContainer" />
 
-    <include layout="@layout/sheet_insert_note" />
+    <com.fondesa.notes.notes.impl.InsertNoteView
+        android:id="@+id/insertNoteContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
     <com.fondesa.notes.notes.impl.NoteFloatingActionButton
         android:id="@+id/noteActionButton"

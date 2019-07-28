@@ -1,16 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/insertNoteContainer"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:paddingLeft="@dimen/space_lg"
-    android:paddingRight="@dimen/space_lg"
-    app:behavior_hideable="true"
-    app:layout_behavior="@string/bottom_sheet_behavior">
+    tools:orientation="vertical"
+    tools:parentTag="android.widget.LinearLayout">
 
     <EditText
         android:id="@+id/titleTextView"
@@ -40,4 +32,4 @@
         tools:ignore="Autofill"
         tools:text="Dummy description" />
 
-</LinearLayout>
+</merge>

@@ -11,7 +11,6 @@ import com.fondesa.notes.ui.api.view.BottomSheetVisibleCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_notes.*
-import kotlinx.android.synthetic.main.sheet_insert_note.*
 import javax.inject.Inject
 
 class NotesActivity : AppCompatActivity(),
@@ -24,7 +23,7 @@ class NotesActivity : AppCompatActivity(),
     @Inject
     internal lateinit var adapter: NoteRecyclerViewAdapter
 
-    private val noteSheet by lazy { BottomSheetBehavior.from(insertNoteContainer) }
+    private val noteSheet by lazy { insertNoteContainer.behavior as BottomSheetBehavior<*> }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
