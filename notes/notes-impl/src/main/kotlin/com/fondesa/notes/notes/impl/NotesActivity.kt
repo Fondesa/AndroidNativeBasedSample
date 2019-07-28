@@ -33,17 +33,9 @@ class NotesActivity : AppCompatActivity(),
         noteSheet.state = BottomSheetBehavior.STATE_HIDDEN
         noteSheet.setBottomSheetCallback(BottomSheetVisibleCallback(this))
 
-        noteActionButton.setOnAddClickListener {
-            presenter.addButtonClicked()
-        }
-
-        noteActionButton.setOnDoneClickListener {
-            presenter.doneButtonClicked()
-        }
-
-        noteActionButton.setOnCancelClickListener {
-
-        }
+        noteActionButton.setOnAddClickListener(presenter::addButtonClicked)
+        noteActionButton.setOnDoneClickListener(presenter::doneButtonClicked)
+        noteActionButton.setOnCancelClickListener(presenter::cancelButtonClicked)
 
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         // Set the adapter on the RecyclerView.
@@ -105,15 +97,27 @@ class NotesActivity : AppCompatActivity(),
         noteSheet.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
+    override fun showAddButton() {
+        noteActionButton.state = NoteFloatingActionButton.State.ADD
+    }
+
+    override fun showDoneButton() {
+        noteActionButton.state = NoteFloatingActionButton.State.DONE
+    }
+
+    override fun showCancelButton() {
+        noteActionButton.state = NoteFloatingActionButton.State.CANCEL
+    }
+
     override fun onBottomSheetHidden() {
         dimBackgroundView.hide()
         elevationView.visibility = View.INVISIBLE
-        noteActionButton.state = NoteFloatingActionButton.State.ADD
+        presenter.insertNoteScreenHidden()
     }
 
     override fun onBottomSheetShown() {
         dimBackgroundView.show()
         elevationView.visibility = View.VISIBLE
-        noteActionButton.state = NoteFloatingActionButton.State.DONE
+        presenter.insertNoteScreenShown()
     }
 }

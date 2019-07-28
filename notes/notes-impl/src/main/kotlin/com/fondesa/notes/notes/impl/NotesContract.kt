@@ -43,6 +43,12 @@ object NotesContract {
         fun showInsertNoteScreen()
 
         fun hideInsertNoteScreen()
+
+        fun showAddButton()
+
+        fun showDoneButton()
+
+        fun showCancelButton()
     }
 
     /**
@@ -53,5 +59,11 @@ object NotesContract {
         fun addButtonClicked()
 
         fun doneButtonClicked()
+
+        fun cancelButtonClicked()
+
+        fun insertNoteScreenShown()
+
+        fun insertNoteScreenHidden()
     }
 }

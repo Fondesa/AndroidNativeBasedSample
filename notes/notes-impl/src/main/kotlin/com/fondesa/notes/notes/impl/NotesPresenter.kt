@@ -11,6 +11,7 @@ class NotesPresenter @Inject constructor(
 ) : NotesContract.Presenter {
 
     override fun attach() {
+        view.showAddButton()
         view.hideListContainer()
         view.hideZeroElementsView()
         val notes = notesRepository.getAll()
@@ -28,5 +29,18 @@ class NotesPresenter @Inject constructor(
 
     override fun doneButtonClicked() {
         view.hideInsertNoteScreen()
+        // TODO: save element
+    }
+
+    override fun cancelButtonClicked() {
+        view.hideInsertNoteScreen()
+    }
+
+    override fun insertNoteScreenShown() {
+        view.showCancelButton()
+    }
+
+    override fun insertNoteScreenHidden() {
+        view.showAddButton()
     }
 }

@@ -30,9 +30,6 @@ class NoteFloatingActionButton @JvmOverloads constructor(
     private val listeners = mutableMapOf<State, () -> Unit>()
 
     init {
-        // Sets the initial state.
-        state = State.ADD
-
         setOnClickListener(this)
     }
 

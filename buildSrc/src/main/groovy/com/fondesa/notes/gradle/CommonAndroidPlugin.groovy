@@ -64,6 +64,7 @@ class CommonAndroidPlugin implements Plugin<Project> {
             }
 
             configurations {
+                // Used to fix the duplicate resolution of Google dependencies.
                 all*.exclude group: 'com.google.guava', module: 'listenablefuture'
             }
 
