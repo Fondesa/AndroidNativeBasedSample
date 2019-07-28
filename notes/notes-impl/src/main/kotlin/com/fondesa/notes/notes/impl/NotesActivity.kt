@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.fondesa.notes.notes.api.DraftNote
 import com.fondesa.notes.notes.api.Note
+import com.fondesa.notes.ui.api.util.hideKeyboard
 import com.fondesa.notes.ui.api.view.BottomSheetVisibleCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.android.AndroidInjection
@@ -110,6 +111,7 @@ class NotesActivity : AppCompatActivity(),
     }
 
     override fun onBottomSheetHidden() {
+        hideKeyboard()
         dimBackgroundView.hide()
         elevationView.visibility = View.INVISIBLE
         presenter.insertNoteScreenHidden()
