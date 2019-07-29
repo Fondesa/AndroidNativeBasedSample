@@ -21,6 +21,8 @@ class NotesPresenter @Inject constructor(
             field = value
         }
 
+    private var isNoteScreenShown: Boolean = false
+
     override fun attach() {
         buttonState = NoteButtonState.ADD
         view.hideListContainer()
@@ -35,11 +37,11 @@ class NotesPresenter @Inject constructor(
     }
 
     override fun addButtonClicked() {
-        view.showInsertNoteScreen()
+        view.showNoteScreen()
     }
 
     override fun doneButtonClicked() {
-        view.hideInsertNoteScreen()
+        view.hideNoteScreen()
 
         val draftNote = noteScreenContent.toDraftNote()
         notesRepository.insert(draftNote)
@@ -54,14 +56,28 @@ class NotesPresenter @Inject constructor(
     }
 
     override fun cancelButtonClicked() {
-        view.hideInsertNoteScreen()
+        view.hideNoteScreen()
     }
 
-    override fun insertNoteScreenShown() {
-        buttonState = NoteButtonState.CANCEL
+    override fun backPressed() {
+        if (isNoteScreenShown) {
+            view.hideNoteScreen()
+        } else {
+            view.executeBackPress()
+        }
     }
 
-    override fun insertNoteScreenHidden() {
+    override fun noteScreenShown() {
+        isNoteScreenShown = true
+        buttonState = if (noteScreenContent.isValid) {
+            NoteButtonState.DONE
+        } else {
+            NoteButtonState.CANCEL
+        }
+    }
+
+    override fun noteScreenHidden() {
+        isNoteScreenShown = false
         buttonState = NoteButtonState.ADD
     }
 

@@ -1,6 +1,5 @@
 package com.fondesa.notes.notes.impl
 
-import com.fondesa.notes.notes.api.DraftNote
 import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.ui.api.mvp.BasePresenter
 
@@ -13,6 +12,8 @@ object NotesContract {
      * Defines all the actions the view should perform when the presenter notifies them.
      */
     interface View {
+
+        fun executeBackPress()
 
         /**
          * Shows the container of the notes.
@@ -41,9 +42,9 @@ object NotesContract {
          */
         fun showNoteList(noteList: List<Note>)
 
-        fun showInsertNoteScreen()
+        fun showNoteScreen()
 
-        fun hideInsertNoteScreen()
+        fun hideNoteScreen()
 
         fun renderButtonState(state: NoteButtonState)
 
@@ -63,9 +64,11 @@ object NotesContract {
 
         fun cancelButtonClicked()
 
-        fun insertNoteScreenShown()
+        fun backPressed()
 
-        fun insertNoteScreenHidden()
+        fun noteScreenShown()
+
+        fun noteScreenHidden()
 
         fun noteScreenTitleChanged(title: String)
 

@@ -45,6 +45,14 @@ class NotesActivity : AppCompatActivity(),
         presenter.attach()
     }
 
+    override fun onBackPressed() {
+        presenter.backPressed()
+    }
+
+    override fun executeBackPress() {
+        super.onBackPressed()
+    }
+
     override fun showListContainer() {
         recyclerView.visibility = View.VISIBLE
     }
@@ -65,11 +73,11 @@ class NotesActivity : AppCompatActivity(),
         adapter.updateList(noteList)
     }
 
-    override fun showInsertNoteScreen() {
+    override fun showNoteScreen() {
         noteSheet.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
-    override fun hideInsertNoteScreen() {
+    override fun hideNoteScreen() {
         noteSheet.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
@@ -89,12 +97,12 @@ class NotesActivity : AppCompatActivity(),
         hideKeyboard()
         dimBackgroundView.hide()
         elevationView.visibility = View.INVISIBLE
-        presenter.insertNoteScreenHidden()
+        presenter.noteScreenHidden()
     }
 
     override fun onBottomSheetShown() {
         dimBackgroundView.show()
         elevationView.visibility = View.VISIBLE
-        presenter.insertNoteScreenShown()
+        presenter.noteScreenShown()
     }
 }
