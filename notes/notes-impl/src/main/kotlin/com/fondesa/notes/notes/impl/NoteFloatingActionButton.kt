@@ -12,13 +12,16 @@ class NoteFloatingActionButton @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : FloatingActionButton(context, attrs, defStyleAttr), View.OnClickListener {
 
-    var state: State = State.UNDEFINED
+    var state: NoteButtonState = NoteButtonState.UNDEFINED
         set(value) {
+            if (field == value) {
+                return
+            }
             val image = when (value) {
-                State.ADD -> drawableAdd
-                State.CANCEL -> drawableCancel
-                State.DONE -> drawableDone
-                State.UNDEFINED -> null
+                NoteButtonState.ADD -> drawableAdd
+                NoteButtonState.CANCEL -> drawableCancel
+                NoteButtonState.DONE -> drawableDone
+                NoteButtonState.UNDEFINED -> null
             }
             setImageDrawable(image)
             field = value
@@ -27,7 +30,7 @@ class NoteFloatingActionButton @JvmOverloads constructor(
     private val drawableAdd by lazy { ContextCompat.getDrawable(context, R.drawable.ic_add) }
     private val drawableCancel by lazy { ContextCompat.getDrawable(context, R.drawable.ic_cancel) }
     private val drawableDone by lazy { ContextCompat.getDrawable(context, R.drawable.ic_done) }
-    private val listeners = mutableMapOf<State, () -> Unit>()
+    private val listeners = mutableMapOf<NoteButtonState, () -> Unit>()
 
     init {
         setOnClickListener(this)
@@ -44,25 +47,18 @@ class NoteFloatingActionButton @JvmOverloads constructor(
     }
 
     fun setOnAddClickListener(listener: () -> Unit) {
-        setClickListenerForState(State.ADD, listener)
+        setClickListenerForState(NoteButtonState.ADD, listener)
     }
 
     fun setOnCancelClickListener(listener: () -> Unit) {
-        setClickListenerForState(State.CANCEL, listener)
+        setClickListenerForState(NoteButtonState.CANCEL, listener)
     }
 
     fun setOnDoneClickListener(listener: () -> Unit) {
-        setClickListenerForState(State.DONE, listener)
+        setClickListenerForState(NoteButtonState.DONE, listener)
     }
 
-    private fun setClickListenerForState(state: State, listener: () -> Unit) {
+    private fun setClickListenerForState(state: NoteButtonState, listener: () -> Unit) {
         listeners[state] = listener
-    }
-
-    enum class State {
-        UNDEFINED,
-        ADD,
-        CANCEL,
-        DONE
     }
 }

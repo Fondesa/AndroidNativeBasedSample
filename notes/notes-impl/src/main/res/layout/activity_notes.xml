@@ -50,10 +50,10 @@
         android:layout_width="match_parent"
         android:layout_height="16dp"
         android:visibility="invisible"
-        app:layout_anchor="@+id/insertNoteContainer" />
+        app:layout_anchor="@+id/insertNoteView" />
 
     <com.fondesa.notes.notes.impl.InsertNoteView
-        android:id="@+id/insertNoteContainer"
+        android:id="@+id/insertNoteView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/space_lg"
         app:fabSize="normal"
-        app:layout_anchor="@+id/insertNoteContainer"
+        app:layout_anchor="@+id/insertNoteView"
         app:layout_anchorGravity="top|end"
         tools:src="@drawable/ic_add" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

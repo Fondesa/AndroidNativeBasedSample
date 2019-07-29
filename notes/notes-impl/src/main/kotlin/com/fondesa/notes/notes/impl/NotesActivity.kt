@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.DividerItemDecoration
-import com.fondesa.notes.notes.api.DraftNote
 import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.ui.api.util.hideKeyboard
 import com.fondesa.notes.ui.api.view.BottomSheetVisibleCallback
@@ -23,7 +22,7 @@ class NotesActivity : AppCompatActivity(),
     @Inject
     internal lateinit var adapter: NoteRecyclerViewAdapter
 
-    private val noteSheet by lazy { insertNoteContainer.behavior as BottomSheetBehavior<*> }
+    private val noteSheet by lazy { insertNoteView.behavior as BottomSheetBehavior<*> }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
@@ -36,35 +35,12 @@ class NotesActivity : AppCompatActivity(),
         noteActionButton.setOnAddClickListener(presenter::addButtonClicked)
         noteActionButton.setOnDoneClickListener(presenter::doneButtonClicked)
         noteActionButton.setOnCancelClickListener(presenter::cancelButtonClicked)
+        insertNoteView.setOnTitleChangeListener(presenter::noteScreenTitleChanged)
+        insertNoteView.setOnDescriptionChangeListener(presenter::noteScreenDescriptionChanged)
 
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         // Set the adapter on the RecyclerView.
         recyclerView.adapter = adapter
-
-        val repository = NativeNotesRepository()
-        repository.insert(
-            DraftNote(
-                "first-title",
-                "first-description"
-            )
-        )
-        repository.insert(
-            DraftNote(
-                "second-title",
-                "second-description"
-            )
-        )
-        val notes = repository.getAll()
-        repository.update(
-            notes[1].id,
-            DraftNote(
-                "updated-second-title",
-                "updated-second-description"
-            )
-        )
-        val notesAfterUpdate = repository.getAll()
-        repository.remove(notes[0].id)
-        val notesAfterRemove = repository.getAll()
 
         presenter.attach()
     }
@@ -97,16 +73,16 @@ class NotesActivity : AppCompatActivity(),
         noteSheet.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
-    override fun showAddButton() {
-        noteActionButton.state = NoteFloatingActionButton.State.ADD
+    override fun renderButtonState(state: NoteButtonState) {
+        noteActionButton.state = state
     }
 
-    override fun showDoneButton() {
-        noteActionButton.state = NoteFloatingActionButton.State.DONE
+    override fun showNoteScreenTitle(title: String) {
+        insertNoteView.setTitle(title)
     }
 
-    override fun showCancelButton() {
-        noteActionButton.state = NoteFloatingActionButton.State.CANCEL
+    override fun showNoteScreenDescription(description: String) {
+        insertNoteView.setDescription(description)
     }
 
     override fun onBottomSheetHidden() {

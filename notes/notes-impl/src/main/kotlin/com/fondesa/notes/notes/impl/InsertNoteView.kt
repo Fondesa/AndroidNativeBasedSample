@@ -2,6 +2,7 @@ package com.fondesa.notes.notes.impl
 
 import android.content.Context
 import android.graphics.Color
+import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
@@ -9,6 +10,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.fondesa.notes.notes.api.DraftNote
 import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.ui.api.util.inflateChild
+import com.fondesa.notes.ui.api.view.AfterTextChangedWatcher
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.sheet_insert_note.view.*
 
@@ -17,13 +19,6 @@ class InsertNoteView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : LinearLayout(context, attrs, defStyleAttr), CoordinatorLayout.AttachedBehavior {
-
-    val isContentValid: Boolean
-        get() {
-            val title = titleTextView.text.toString()
-            val description = descriptionTextView.text.toString()
-            return title.isNotBlank() && description.isNotBlank()
-        }
 
     private val behavior: BottomSheetBehavior<View> =
         if (attrs == null) {
@@ -34,6 +29,9 @@ class InsertNoteView @JvmOverloads constructor(
             isHideable = true
         }
 
+    private var titleChangeListener: TextWatcher? = null
+    private var descriptionChangeListener: TextWatcher? = null
+
     init {
         inflateChild(R.layout.sheet_insert_note, attachToRoot = true)
 
@@ -43,20 +41,47 @@ class InsertNoteView @JvmOverloads constructor(
         orientation = VERTICAL
     }
 
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        clearOnTitleChangeListener()
+        clearOnDescriptionChangeListener()
+    }
+
     override fun getBehavior(): CoordinatorLayout.Behavior<*> = behavior
 
-    fun bindContent(note: Note) {
-        titleTextView.setText(note.title)
-        descriptionTextView.setText(note.description)
+    fun setTitle(title: String) {
+        titleTextView.setText(title)
     }
 
-    fun clearContent() {
-        titleTextView.text = null
-        descriptionTextView.text = null
+    fun setDescription(description: String) {
+        descriptionTextView.setText(description)
     }
 
-    fun obtainContent(): DraftNote = DraftNote(
-        title = titleTextView.text.toString(),
-        description = descriptionTextView.text.toString()
-    )
+    fun setOnTitleChangeListener(listener: (String) -> Unit) {
+        clearOnTitleChangeListener()
+        titleChangeListener = AfterTextChangedWatcher(listener).also {
+            titleTextView.addTextChangedListener(it)
+        }
+    }
+
+    fun setOnDescriptionChangeListener(listener: (String) -> Unit) {
+        clearOnDescriptionChangeListener()
+        descriptionChangeListener = AfterTextChangedWatcher(listener).also {
+            descriptionTextView.addTextChangedListener(it)
+        }
+    }
+
+    private fun clearOnTitleChangeListener() {
+        titleChangeListener?.let {
+            titleTextView.removeTextChangedListener(it)
+        }
+        titleChangeListener = null
+    }
+
+    private fun clearOnDescriptionChangeListener() {
+        descriptionChangeListener?.let {
+            descriptionTextView.removeTextChangedListener(it)
+        }
+        descriptionChangeListener = null
+    }
 }

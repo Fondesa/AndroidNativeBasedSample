@@ -1,5 +1,6 @@
 package com.fondesa.notes.notes.impl
 
+import com.fondesa.notes.notes.api.DraftNote
 import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.ui.api.mvp.BasePresenter
 
@@ -44,11 +45,11 @@ object NotesContract {
 
         fun hideInsertNoteScreen()
 
-        fun showAddButton()
+        fun renderButtonState(state: NoteButtonState)
 
-        fun showDoneButton()
+        fun showNoteScreenTitle(title: String)
 
-        fun showCancelButton()
+        fun showNoteScreenDescription(description: String)
     }
 
     /**
@@ -65,5 +66,9 @@ object NotesContract {
         fun insertNoteScreenShown()
 
         fun insertNoteScreenHidden()
+
+        fun noteScreenTitleChanged(title: String)
+
+        fun noteScreenDescriptionChanged(description: String)
     }
 }

@@ -1,5 +1,6 @@
 package com.fondesa.notes.notes.impl
 
+import com.fondesa.notes.notes.api.DraftNote
 import com.fondesa.notes.notes.api.NotesRepository
 import com.fondesa.notes.ui.api.qualifiers.ScreenScope
 import javax.inject.Inject
@@ -10,8 +11,18 @@ class NotesPresenter @Inject constructor(
     private val notesRepository: NotesRepository
 ) : NotesContract.Presenter {
 
+    private val noteScreenContent = NoteScreenContent(
+        title = "",
+        description = ""
+    )
+    private var buttonState = NoteButtonState.UNDEFINED
+        set(value) {
+            view.renderButtonState(value)
+            field = value
+        }
+
     override fun attach() {
-        view.showAddButton()
+        buttonState = NoteButtonState.ADD
         view.hideListContainer()
         view.hideZeroElementsView()
         val notes = notesRepository.getAll()
@@ -29,7 +40,17 @@ class NotesPresenter @Inject constructor(
 
     override fun doneButtonClicked() {
         view.hideInsertNoteScreen()
-        // TODO: save element
+
+        val draftNote = noteScreenContent.toDraftNote()
+        notesRepository.insert(draftNote)
+
+        val notes = notesRepository.getAll()
+        view.hideZeroElementsView()
+        view.showListContainer()
+        view.showNoteList(notes)
+
+        view.showNoteScreenTitle("")
+        view.showNoteScreenDescription("")
     }
 
     override fun cancelButtonClicked() {
@@ -37,10 +58,38 @@ class NotesPresenter @Inject constructor(
     }
 
     override fun insertNoteScreenShown() {
-        view.showCancelButton()
+        buttonState = NoteButtonState.CANCEL
     }
 
     override fun insertNoteScreenHidden() {
-        view.showAddButton()
+        buttonState = NoteButtonState.ADD
+    }
+
+    override fun noteScreenTitleChanged(title: String) {
+        noteScreenContent.title = title
+        buttonState = if (noteScreenContent.isValid) {
+            NoteButtonState.DONE
+        } else {
+            NoteButtonState.CANCEL
+        }
+    }
+
+    override fun noteScreenDescriptionChanged(description: String) {
+        noteScreenContent.description = description
+        buttonState = if (noteScreenContent.isValid) {
+            NoteButtonState.DONE
+        } else {
+            NoteButtonState.CANCEL
+        }
+    }
+
+    private data class NoteScreenContent(
+        var title: String,
+        var description: String
+    ) {
+
+        val isValid: Boolean get() = title.isNotBlank() || description.isNotBlank()
+
+        fun toDraftNote(): DraftNote = DraftNote(title, description)
     }
 }
