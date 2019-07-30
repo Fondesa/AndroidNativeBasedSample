@@ -14,7 +14,8 @@ import javax.inject.Inject
 
 class NotesActivity : AppCompatActivity(),
     NotesContract.View,
-    BottomSheetVisibleCallback.Listener {
+    BottomSheetVisibleCallback.Listener,
+    NoteRecyclerViewAdapter.OnNoteClickListener {
 
     @Inject
     internal lateinit var presenter: NotesContract.Presenter
@@ -104,5 +105,9 @@ class NotesActivity : AppCompatActivity(),
         dimBackgroundView.show()
         elevationView.visibility = View.VISIBLE
         presenter.noteScreenShown()
+    }
+
+    override fun onNoteClicked(note: Note) {
+        presenter.noteClicked(note)
     }
 }

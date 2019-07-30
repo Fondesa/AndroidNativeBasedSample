@@ -73,5 +73,7 @@ object NotesContract {
         fun noteScreenTitleChanged(title: String)
 
         fun noteScreenDescriptionChanged(description: String)
+
+        fun noteClicked(note: Note)
     }
 }

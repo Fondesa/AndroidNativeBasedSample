@@ -1,5 +1,6 @@
 package com.fondesa.notes.notes.impl
 
+import android.view.View
 import android.view.ViewGroup
 import com.fondesa.notes.notes.api.Note
 import javax.inject.Inject
@@ -9,7 +10,8 @@ import javax.inject.Inject
  * to create the view holder.
  */
 class NoteRecyclerViewAdapterImpl @Inject constructor(
-    private val holderFactory: NoteRecyclerViewHolderFactory
+    private val holderFactory: NoteRecyclerViewHolderFactory,
+    private val clickListener: OnNoteClickListener
 ) : NoteRecyclerViewAdapter() {
 
     private val items = mutableListOf<Note>()
@@ -27,7 +29,7 @@ class NoteRecyclerViewAdapterImpl @Inject constructor(
         return item.id.toLong()
     }
 
-    override fun onCreateViewHolder(
+    override fun onCreateInteractiveViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): NoteRecyclerViewHolder = holderFactory.create(parent)
@@ -41,5 +43,11 @@ class NoteRecyclerViewAdapterImpl @Inject constructor(
         this.items.clear()
         this.items.addAll(items)
         notifyDataSetChanged()
+    }
+
+    override fun onCellClick(view: View, position: Int) {
+        super.onCellClick(view, position)
+        val note = items[position]
+        clickListener.onNoteClicked(note)
     }
 }

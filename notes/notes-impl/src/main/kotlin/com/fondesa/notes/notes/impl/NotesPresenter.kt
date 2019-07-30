@@ -1,6 +1,7 @@
 package com.fondesa.notes.notes.impl
 
 import com.fondesa.notes.notes.api.DraftNote
+import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.notes.api.NotesRepository
 import com.fondesa.notes.ui.api.qualifiers.ScreenScope
 import javax.inject.Inject
@@ -22,6 +23,7 @@ class NotesPresenter @Inject constructor(
         }
 
     private var isNoteScreenShown: Boolean = false
+    private var pendingNoteScreenId: Int? = null
 
     override fun attach() {
         buttonState = NoteButtonState.ADD
@@ -44,7 +46,17 @@ class NotesPresenter @Inject constructor(
         view.hideNoteScreen()
 
         val draftNote = noteScreenContent.toDraftNote()
-        notesRepository.insert(draftNote)
+
+        val pendingNoteScreenId = pendingNoteScreenId
+        if (pendingNoteScreenId != null) {
+            // Update the note.
+            notesRepository.update(pendingNoteScreenId, draftNote)
+            // Reset the pending id.
+            this.pendingNoteScreenId = null
+        } else {
+            // Insert the note.
+            notesRepository.insert(draftNote)
+        }
 
         val notes = notesRepository.getAll()
         view.hideZeroElementsView()
@@ -97,6 +109,14 @@ class NotesPresenter @Inject constructor(
         } else {
             NoteButtonState.CANCEL
         }
+    }
+
+    override fun noteClicked(note: Note) {
+        // Save the note id to identify the note which should be updated.
+        pendingNoteScreenId = note.id
+        view.showNoteScreenTitle(note.title)
+        view.showNoteScreenDescription(note.description)
+        view.showNoteScreen()
     }
 
     private data class NoteScreenContent(

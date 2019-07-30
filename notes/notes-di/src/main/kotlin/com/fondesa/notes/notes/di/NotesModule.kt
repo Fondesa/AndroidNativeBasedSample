@@ -37,5 +37,8 @@ interface NotesModule {
 
         @Binds
         fun provideAdapter(adapter: NoteRecyclerViewAdapterImpl): NoteRecyclerViewAdapter
+
+        @Binds
+        fun provideOnNoteClickListener(activity: NotesActivity): NoteRecyclerViewAdapter.OnNoteClickListener
     }
 }
