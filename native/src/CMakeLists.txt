@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 set(PROJECT_NAME notes-native)
-set(PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR}/..)
+get_filename_component(PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR} DIRECTORY)
 
 add_library(native_mobile_lib SHARED IMPORTED)
 set_target_properties(native_mobile_lib PROPERTIES IMPORTED_LOCATION

@@ -1,6 +1,6 @@
 #include <jni.h>
 #include <string>
-#include "database_note_repository.hpp"
+#include "database_notes_repository.hpp"
 #include "database_client.hpp"
 #include "note_database_initializer.hpp"
 #include "foo.hpp"
@@ -30,7 +30,7 @@ Java_com_fondesa_notes_notes_impl_NativeNotesRepository_getRepositoryHandle(
     jobject /* this */
 ) {
     auto db = Db::Client::get();
-    return Jni::PointerWrapper<DatabaseNoteRepository>::make(db)->address();
+    return Jni::PointerWrapper<DatabaseNotesRepository>::make(db)->address();
 }
 
 JNIEXPORT void JNICALL
@@ -40,7 +40,7 @@ Java_com_fondesa_notes_notes_impl_NativeNotesRepository_remove(
     jlong handle,
     jint id
 ) {
-    auto repository = Jni::PointerWrapper<NoteRepository>::get(handle);
+    auto repository = Jni::PointerWrapper<NotesRepository>::get(handle);
 
     repository->remove(id);
 }
@@ -52,7 +52,7 @@ Java_com_fondesa_notes_notes_impl_NativeNotesRepository_insert(
     jlong handle,
     jobject jDraftNote
 ) {
-    auto repository = Jni::PointerWrapper<NoteRepository>::get(handle);
+    auto repository = Jni::PointerWrapper<NotesRepository>::get(handle);
 
     auto draftNote = Jni::mapToNative<DraftNote>(env, jDraftNote);
     repository->insert(draftNote);
@@ -68,7 +68,7 @@ Java_com_fondesa_notes_notes_impl_NativeNotesRepository_update(
     jint noteId,
     jobject jDraftNote
 ) {
-    auto repository = Jni::PointerWrapper<NoteRepository>::get(handle);
+    auto repository = Jni::PointerWrapper<NotesRepository>::get(handle);
 
     auto draftNote = Jni::mapToNative<DraftNote>(env, jDraftNote);
     repository->update(noteId, draftNote);
@@ -82,7 +82,7 @@ Java_com_fondesa_notes_notes_impl_NativeNotesRepository_getAll(
     jobject /* this */,
     jlong handle
 ) {
-    auto repository = Jni::PointerWrapper<NoteRepository>::get(handle);
+    auto repository = Jni::PointerWrapper<NotesRepository>::get(handle);
 
     auto notes = repository->getAll();
 
