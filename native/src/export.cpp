@@ -8,6 +8,7 @@
 #include "util/jclass_util.hpp"
 #include "util/mapping.hpp"
 #include "util/pointer_wrapper.hpp"
+#include "note/note_class_util.hpp"
 
 extern "C" {
 
@@ -86,10 +87,8 @@ Java_com_fondesa_notes_notes_impl_NativeNotesRepository_getAll(
 
     auto notes = repository->getAll();
 
-    jclass noteClass = Jni::findClass(env, "com/fondesa/notes/notes/api/Note");
-    jmethodID noteConstructorId = Jni::findConstructor(env,
-                                                       noteClass,
-                                                       "(ILjava/lang/String;Ljava/lang/String;)V");
+    jclass noteClass = Jni::findClass(env, Jni::Note::cls());
+    jmethodID noteConstructorId = Jni::findConstructor(env, noteClass, Jni::Note::ctor());
 
     auto mapper = [&](Note note) {
         return Jni::mapFromNative<Note>(env, note, noteClass, noteConstructorId);
