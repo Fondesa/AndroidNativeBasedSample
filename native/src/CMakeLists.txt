@@ -8,7 +8,8 @@ set_target_properties(native_mobile_lib PROPERTIES IMPORTED_LOCATION
         ${PROJECT_DIR}/libs/nativemobile/${ANDROID_ABI}/libnativemobile.so)
 
 set(SOURCE_FILES
-        export.cpp
+        export/export_notes_database_initializer.cpp
+        export/export_native_notes_repository.cpp
         util/jclass_util.cpp
         util/string_field.cpp
         util/mapping.cpp
@@ -17,7 +18,10 @@ set(SOURCE_FILES
 
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 
-target_include_directories(${PROJECT_NAME} PRIVATE ${PROJECT_DIR}/libs/nativemobile/include)
+target_include_directories(${PROJECT_NAME}
+        PUBLIC ${PROJECT_DIR}/src
+        PRIVATE ${PROJECT_DIR}/libs/nativemobile/include
+        )
 
 target_link_libraries(
         ${PROJECT_NAME}

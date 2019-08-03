@@ -1,29 +1,13 @@
 #include <jni.h>
-#include <string>
+#include "util/mapping.hpp"
+#include "util/jclass_util.hpp"
+#include "note/note_class_util.hpp"
 #include "database_notes_repository.hpp"
 #include "database_client.hpp"
-#include "note_database_initializer.hpp"
-#include "foo.hpp"
-#include "log/log.hpp"
-#include "util/jclass_util.hpp"
-#include "util/mapping.hpp"
 #include "util/pointer_wrapper.hpp"
-#include "note/note_class_util.hpp"
+#include "log/log.hpp"
 
 extern "C" {
-
-JNIEXPORT void JNICALL
-Java_com_fondesa_notes_notes_impl_NotesDatabaseInitializer_initializeDatabase(
-    JNIEnv *env,
-    jobject /* this */,
-    jstring dbPath
-) {
-    jboolean isCopy = JNI_TRUE;
-    const char *utfDbPath = env->GetStringUTFChars(dbPath, &isCopy);
-    std::string stdDbPath = std::string(utfDbPath);
-
-    NoteDb::initialize(stdDbPath);
-}
 
 JNIEXPORT jlong JNICALL
 Java_com_fondesa_notes_notes_impl_NativeNotesRepository_getRepositoryHandle(
