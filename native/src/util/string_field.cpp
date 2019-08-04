@@ -1,5 +1,5 @@
 #include "string_field.hpp"
-#include "../log/log.hpp"
+#include "log/log.hpp"
 
 namespace Jni {
 

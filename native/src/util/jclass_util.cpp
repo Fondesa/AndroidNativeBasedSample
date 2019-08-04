@@ -4,12 +4,6 @@
 
 namespace Jni {
 
-StringField findStringField(JNIEnv *env, jobject obj, jclass cls, const char *fieldName) {
-    jfieldID fieldId = env->GetFieldID(cls, fieldName, "Ljava/lang/String;");
-    auto jvalue = (jstring) env->GetObjectField(obj, fieldId);
-    return StringField(env, jvalue);
-}
-
 jclass findClass(JNIEnv *env, const char *className) {
     jclass noteClass = env->FindClass(className);
     // TODO: use different null check
@@ -59,6 +53,19 @@ jobjectArray jArrayFromVector(
  * Dedicated namespace for explicit templates specialization.
  */
 namespace Jni {
+
+template<>
+int findField(JNIEnv *env, jobject obj, jclass cls, const char *fieldName) {
+    jfieldID fieldId = env->GetFieldID(cls, fieldName, "I");
+    return env->GetIntField(obj, fieldId);
+}
+
+template<>
+StringField findField(JNIEnv *env, jobject obj, jclass cls, const char *fieldName) {
+    jfieldID fieldId = env->GetFieldID(cls, fieldName, "Ljava/lang/String;");
+    auto jvalue = (jstring) env->GetObjectField(obj, fieldId);
+    return StringField(env, jvalue);
+}
 
 template jobjectArray jArrayFromVector<Note>(
     JNIEnv *env,

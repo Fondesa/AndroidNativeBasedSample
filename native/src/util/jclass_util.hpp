@@ -6,7 +6,8 @@
 
 namespace Jni {
 
-StringField findStringField(JNIEnv *env, jobject obj, jclass cls, const char *fieldName);
+template<typename T>
+T findField(JNIEnv *env, jobject obj, jclass cls, const char *fieldName);
 
 jclass findClass(JNIEnv *env, const char *className);
 
