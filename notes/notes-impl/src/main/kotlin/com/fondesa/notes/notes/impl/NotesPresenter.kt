@@ -1,5 +1,6 @@
 package com.fondesa.notes.notes.impl
 
+import com.fondesa.notes.log.api.Log
 import com.fondesa.notes.notes.api.DraftNote
 import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.notes.api.NotesRepository
@@ -77,6 +78,14 @@ class NotesPresenter @Inject constructor(
         } else {
             view.executeBackPress()
         }
+    }
+
+    override fun pressedOutsideNoteScreen() {
+        if (!isNoteScreenShown) {
+            Log.e("The presenter received the touch outside with the note screen hidden.")
+            return
+        }
+        view.hideNoteScreen()
     }
 
     override fun noteScreenShown() {

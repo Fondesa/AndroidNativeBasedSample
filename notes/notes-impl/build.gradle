@@ -12,6 +12,7 @@ dependencies {
     api deps.androidDesign
     api deps.daggerAndroid
 
+    implementation project(':log:log-api')
     implementation deps.autoFactory
 
     testImplementation project(':testing:testing-jvm')

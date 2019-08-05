@@ -38,6 +38,9 @@ class NotesActivity : AppCompatActivity(),
         noteActionButton.setOnCancelClickListener(presenter::cancelButtonClicked)
         insertNoteView.setOnTitleChangeListener(presenter::noteScreenTitleChanged)
         insertNoteView.setOnDescriptionChangeListener(presenter::noteScreenDescriptionChanged)
+        dimBackgroundView.setOnClickListener {
+            presenter.pressedOutsideNoteScreen()
+        }
 
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         // Set the adapter on the RecyclerView.
