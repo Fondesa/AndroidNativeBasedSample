@@ -2,6 +2,7 @@ package com.fondesa.notes.notes.impl
 
 import com.fondesa.notes.log.api.Log
 import com.fondesa.notes.notes.api.DraftNote
+import com.fondesa.notes.notes.api.DraftNotesRepository
 import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.notes.api.NotesRepository
 import com.fondesa.notes.ui.api.qualifiers.ScreenScope
@@ -10,7 +11,8 @@ import javax.inject.Inject
 @ScreenScope
 class NotesPresenter @Inject constructor(
     private val view: NotesContract.View,
-    private val notesRepository: NotesRepository
+    private val notesRepository: NotesRepository,
+    private val draftNotesRepository: DraftNotesRepository
 ) : NotesContract.Presenter {
 
     private val noteScreenContent = NoteScreenContent(
