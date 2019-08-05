@@ -40,6 +40,10 @@ class NotesPresenter @Inject constructor(
     }
 
     override fun addButtonClicked() {
+        // Since we are creating a new note, we don't need any id.
+        pendingNoteScreenId = null
+        view.showNoteScreenTitle("")
+        view.showNoteScreenDescription("")
         view.showNoteScreen()
     }
 
@@ -52,8 +56,6 @@ class NotesPresenter @Inject constructor(
         if (pendingNoteScreenId != null) {
             // Update the note.
             notesRepository.update(pendingNoteScreenId, draftNote)
-            // Reset the pending id.
-            this.pendingNoteScreenId = null
         } else {
             // Insert the note.
             notesRepository.insert(draftNote)
