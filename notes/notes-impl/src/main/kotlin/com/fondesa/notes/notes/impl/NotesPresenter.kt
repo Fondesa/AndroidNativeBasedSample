@@ -4,14 +4,14 @@ import com.fondesa.notes.log.api.Log
 import com.fondesa.notes.notes.api.DraftNote
 import com.fondesa.notes.notes.api.DraftNotesRepository
 import com.fondesa.notes.notes.api.Note
-import com.fondesa.notes.notes.api.NotesRepository
+import com.fondesa.notes.notes.api.NotesInteractor
 import com.fondesa.notes.ui.api.qualifiers.ScreenScope
 import javax.inject.Inject
 
 @ScreenScope
 class NotesPresenter @Inject constructor(
     private val view: NotesContract.View,
-    private val notesRepository: NotesRepository,
+    private val notesInteractor: NotesInteractor,
     private val draftNotesRepository: DraftNotesRepository
 ) : NotesContract.Presenter {
 
@@ -32,7 +32,7 @@ class NotesPresenter @Inject constructor(
         buttonState = NoteButtonState.ADD
         view.hideListContainer()
         view.hideZeroElementsView()
-        val notes = notesRepository.getAll()
+        val notes = notesInteractor.getAllNotes()
         if (notes.isEmpty()) {
             view.showZeroElementsView()
         } else {
@@ -57,13 +57,13 @@ class NotesPresenter @Inject constructor(
         val pendingNoteScreenId = pendingNoteScreenId
         if (pendingNoteScreenId != null) {
             // Update the note.
-            notesRepository.update(pendingNoteScreenId, draftNote)
+            notesInteractor.updateNote(pendingNoteScreenId, draftNote)
         } else {
             // Insert the note.
-            notesRepository.insert(draftNote)
+            notesInteractor.insertNote(draftNote)
         }
 
-        val notes = notesRepository.getAll()
+        val notes = notesInteractor.getAllNotes()
         view.hideZeroElementsView()
         view.showListContainer()
         view.showNoteList(notes)
