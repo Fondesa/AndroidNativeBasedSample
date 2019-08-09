@@ -1,7 +1,6 @@
 package com.fondesa.notes.notes.di
 
 import com.fondesa.notes.core.api.AppInitializer
-import com.fondesa.notes.notes.api.DraftNotesRepository
 import com.fondesa.notes.notes.api.NotesInteractor
 import com.fondesa.notes.notes.impl.*
 import com.fondesa.notes.ui.api.qualifiers.ScreenScope
@@ -15,9 +14,6 @@ interface NotesModule {
 
     @Binds
     fun provideNotesInteractor(repository: NativeNotesInteractor): NotesInteractor
-
-    @Binds
-    fun provideDraftNotesRepository(repository: NativeDraftNotesRepository): DraftNotesRepository
 
     @Binds
     @IntoSet

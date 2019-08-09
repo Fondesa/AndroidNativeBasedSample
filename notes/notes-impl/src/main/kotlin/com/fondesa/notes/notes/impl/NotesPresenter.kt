@@ -1,8 +1,7 @@
 package com.fondesa.notes.notes.impl
 
 import com.fondesa.notes.log.api.Log
-import com.fondesa.notes.notes.api.DraftNote
-import com.fondesa.notes.notes.api.DraftNotesRepository
+import com.fondesa.notes.notes.api.Draft
 import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.notes.api.NotesInteractor
 import com.fondesa.notes.ui.api.qualifiers.ScreenScope
@@ -11,8 +10,7 @@ import javax.inject.Inject
 @ScreenScope
 class NotesPresenter @Inject constructor(
     private val view: NotesContract.View,
-    private val notesInteractor: NotesInteractor,
-    private val draftNotesRepository: DraftNotesRepository
+    private val notesInteractor: NotesInteractor
 ) : NotesContract.Presenter {
 
     private val noteScreenContent = NoteScreenContent(
@@ -52,15 +50,15 @@ class NotesPresenter @Inject constructor(
     override fun doneButtonClicked() {
         view.hideNoteScreen()
 
-        val draftNote = noteScreenContent.toDraftNote()
+        val draft = noteScreenContent.toDraft()
 
         val pendingNoteScreenId = pendingNoteScreenId
         if (pendingNoteScreenId != null) {
             // Update the note.
-            notesInteractor.updateNote(pendingNoteScreenId, draftNote)
+            notesInteractor.updateNote(pendingNoteScreenId, draft)
         } else {
             // Insert the note.
-            notesInteractor.insertNote(draftNote)
+            notesInteractor.insertNote(draft)
         }
 
         val notes = notesInteractor.getAllNotes()
@@ -139,6 +137,6 @@ class NotesPresenter @Inject constructor(
 
         val isValid: Boolean get() = title.isNotBlank() || description.isNotBlank()
 
-        fun toDraftNote(): DraftNote = DraftNote(title, description)
+        fun toDraft(): Draft = Draft(title, description)
     }
 }

@@ -9,8 +9,7 @@ set_target_properties(native_mobile_lib PROPERTIES IMPORTED_LOCATION
 
 set(SOURCE_FILES
         export/export_notes_database_initializer.cpp
-        export/export_native_notes_repository.cpp
-        export/export_draft_native_notes_repository.cpp
+        export/export_native_notes_interactor.cpp
         util/jclass_util.cpp
         util/string_field.cpp
         util/mapping.cpp

@@ -47,7 +47,7 @@ class PointerWrapper {
     }
 
     explicit PointerWrapper(std::shared_ptr<T> obj) {
-        obj = obj;
+        this->obj = obj;
     }
 };
 }

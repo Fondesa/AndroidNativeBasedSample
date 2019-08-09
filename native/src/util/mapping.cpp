@@ -1,16 +1,16 @@
 #include <vector>
 #include <note.hpp>
-#include "draft_note.hpp"
+#include "draft.hpp"
 #include "mapping.hpp"
 #include "jclass_util.hpp"
 
 namespace Jni {
 
 template<>
-jobject mapFromNative<DraftNote>(JNIEnv *env, DraftNote obj, jclass cls, jmethodID constructor) {
-    auto draftNote = std::move(obj);
-    jstring noteTitle = env->NewStringUTF(draftNote.getTitle().c_str());
-    jstring noteDescription = env->NewStringUTF(draftNote.getDescription().c_str());
+jobject mapFromNative<Draft>(JNIEnv *env, Draft obj, jclass cls, jmethodID constructor) {
+    auto draft = std::move(obj);
+    jstring noteTitle = env->NewStringUTF(draft.getTitle().c_str());
+    jstring noteDescription = env->NewStringUTF(draft.getDescription().c_str());
 
     return env->NewObject(cls,
                           constructor,
@@ -33,13 +33,13 @@ jobject mapFromNative<Note>(JNIEnv *env, Note obj, jclass cls, jmethodID constru
 }
 
 template<>
-DraftNote mapToNative(JNIEnv *env, jobject obj) {
+Draft mapToNative(JNIEnv *env, jobject obj) {
     jclass cls = env->GetObjectClass(obj);
 
     auto title = Jni::findField<StringField>(env, obj, cls, "title");
     auto description = Jni::findField<StringField>(env, obj, cls, "description");
 
-    return DraftNote(title.utfValue, description.utfValue);
+    return Draft(title.utfValue, description.utfValue);
 }
 
 template<>

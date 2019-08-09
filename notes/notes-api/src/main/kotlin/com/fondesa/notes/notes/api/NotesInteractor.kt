@@ -2,11 +2,11 @@ package com.fondesa.notes.notes.api
 
 interface NotesInteractor {
 
-    fun insertNote(draftNote: DraftNote)
+    fun insertNote(draft: Draft)
 
     fun deleteNote(noteId: Int)
 
-    fun updateNote(noteId: Int, draftNote: DraftNote)
+    fun updateNote(noteId: Int, draft: Draft)
 
     fun updateNewDraftTitle(title: String)
 
@@ -18,9 +18,9 @@ interface NotesInteractor {
 
     fun getAllNotes(): List<Note>
 
-    fun getNewDraft(): DraftNote?
+    fun getNewDraft(): Draft?
 
-    fun getExistingDraft(noteId: Int): DraftNote?
+    fun getExistingDraft(noteId: Int): Draft?
 
     fun persistChanges()
 }

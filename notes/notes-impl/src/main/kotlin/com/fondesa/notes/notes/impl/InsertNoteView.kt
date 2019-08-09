@@ -7,8 +7,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.fondesa.notes.notes.api.DraftNote
-import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.ui.api.util.inflateChild
 import com.fondesa.notes.ui.api.view.AfterTextChangedWatcher
 import com.google.android.material.bottomsheet.BottomSheetBehavior

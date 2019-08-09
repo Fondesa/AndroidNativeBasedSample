@@ -1,9 +1,9 @@
 #pragma once
 
-namespace Jni::DraftNote {
+namespace Jni::Draft {
 
 inline const char *const &cls() {
-    static const char *value = "com/fondesa/notes/notes/api/DraftNote";
+    static const char *value = "com/fondesa/notes/notes/api/Draft";
     return value;
 }
 
