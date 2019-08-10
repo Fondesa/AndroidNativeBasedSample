@@ -38,6 +38,12 @@ class NotesPresenter @Inject constructor(
     private var isNoteScreenShown: Boolean = false
     private var pendingNoteScreenId: Int? = null
 
+    private val originalNoteScreenContent: OriginalNoteScreenContent
+        get() = _originalNoteScreenContent
+            ?: throw IllegalStateException("The note screen wasn't shown yet.")
+
+    private var _originalNoteScreenContent: OriginalNoteScreenContent? = null
+
     override val coroutineContext: CoroutineContext
         get() = job + contextProvider.IO
 
@@ -60,14 +66,17 @@ class NotesPresenter @Inject constructor(
 
         val newDraft = notesInteractor.getNewDraft()
 
+        _originalNoteScreenContent = OriginalNoteScreenContent(
+            title = "",
+            description = ""
+        )
+
         val title: String
         val description: String
         if (newDraft != null) {
-            view.showDraftLabel()
             title = newDraft.title
             description = newDraft.description
         } else {
-            view.hideDraftLabel()
             title = ""
             description = ""
         }
@@ -138,6 +147,7 @@ class NotesPresenter @Inject constructor(
 
     override fun noteScreenTitleChanged(title: String) {
         noteScreenContent.title = title
+        toggleDraftLabel()
         buttonState = if (noteScreenContent.isValid) {
             NoteButtonState.DONE
         } else {
@@ -153,6 +163,7 @@ class NotesPresenter @Inject constructor(
 
     override fun noteScreenDescriptionChanged(description: String) {
         noteScreenContent.description = description
+        toggleDraftLabel()
         buttonState = if (noteScreenContent.isValid) {
             NoteButtonState.DONE
         } else {
@@ -167,7 +178,12 @@ class NotesPresenter @Inject constructor(
     }
 
     override fun noteClicked(note: Note) {
-        val noteId = note.id
+        val (noteId, noteTitle, noteDescription) = note
+        _originalNoteScreenContent = OriginalNoteScreenContent(
+            title = noteTitle,
+            description = noteDescription
+        )
+
         // Save the note id to identify the note which should be updated.
         pendingNoteScreenId = noteId
 
@@ -176,13 +192,11 @@ class NotesPresenter @Inject constructor(
         val title: String
         val description: String
         if (existingDraft != null) {
-            view.showDraftLabel()
             title = existingDraft.title
             description = existingDraft.description
         } else {
-            view.hideDraftLabel()
-            title = note.title
-            description = note.description
+            title = noteTitle
+            description = noteDescription
         }
 
         view.showNoteScreenTitle(title)
@@ -193,6 +207,7 @@ class NotesPresenter @Inject constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
     private fun screenEntersBackgroundState() {
         launch {
+            // The changes will be persisted in background.
             notesInteractor.persistChanges()
         }
     }
@@ -200,6 +215,17 @@ class NotesPresenter @Inject constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     private fun detach() {
         job.cancel()
+    }
+
+    private fun toggleDraftLabel() {
+        val isOriginalTitle = noteScreenContent.title == originalNoteScreenContent.title
+        val isOriginalDescription =
+            noteScreenContent.description == originalNoteScreenContent.description
+        if (isOriginalTitle && isOriginalDescription) {
+            view.hideDraftLabel()
+        } else {
+            view.showDraftLabel()
+        }
     }
 
     private data class NoteScreenContent(
@@ -211,4 +237,9 @@ class NotesPresenter @Inject constructor(
 
         fun toDraft(): Draft = Draft(title, description)
     }
+
+    private data class OriginalNoteScreenContent(
+        val title: String,
+        val description: String
+    )
 }
