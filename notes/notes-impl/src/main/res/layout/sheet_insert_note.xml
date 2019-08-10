@@ -4,11 +4,24 @@
     tools:orientation="vertical"
     tools:parentTag="android.widget.LinearLayout">
 
+    <TextView
+        android:id="@+id/draftLabelView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_md"
+        android:text="@string/draft"
+        android:textAllCaps="true"
+        android:textColor="@color/draft_label"
+        android:textSize="@dimen/text_sm"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        tools:visibility="visible" />
+
     <EditText
         android:id="@+id/titleTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_lg"
+        android:layout_marginTop="@dimen/space_md"
         android:background="@null"
         android:hint="@string/hint_title"
         android:inputType="textMultiLine"

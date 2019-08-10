@@ -35,6 +35,10 @@ object NotesContract {
          */
         fun hideZeroElementsView()
 
+        fun showDraftLabel()
+
+        fun hideDraftLabel()
+
         /**
          * Updates the current list of notes with the given one.
          *

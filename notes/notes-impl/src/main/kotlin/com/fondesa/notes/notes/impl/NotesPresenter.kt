@@ -57,8 +57,14 @@ class NotesPresenter @Inject constructor(
     override fun addButtonClicked() {
         // Since we are creating a new note, we don't need any id.
         pendingNoteScreenId = null
-        view.showNoteScreenTitle("")
-        view.showNoteScreenDescription("")
+
+        val newDraft = notesInteractor.getNewDraft()
+
+        val title = newDraft?.title ?: ""
+        val description = newDraft?.description ?: ""
+
+        view.showNoteScreenTitle(title)
+        view.showNoteScreenDescription(description)
         view.showNoteScreen()
     }
 
@@ -81,8 +87,10 @@ class NotesPresenter @Inject constructor(
         view.showListContainer()
         view.showNoteList(notes)
 
-        view.showNoteScreenTitle("")
-        view.showNoteScreenDescription("")
+//        TODO not necessary
+//        view.hideDraftLabel()
+//        view.showNoteScreenTitle("")
+//        view.showNoteScreenDescription("")
     }
 
     override fun cancelButtonClicked() {
@@ -150,10 +158,26 @@ class NotesPresenter @Inject constructor(
     }
 
     override fun noteClicked(note: Note) {
+        val noteId = note.id
         // Save the note id to identify the note which should be updated.
-        pendingNoteScreenId = note.id
-        view.showNoteScreenTitle(note.title)
-        view.showNoteScreenDescription(note.description)
+        pendingNoteScreenId = noteId
+
+        val existingDraft = notesInteractor.getExistingDraft(noteId)
+
+        val title: String
+        val description: String
+        if (existingDraft != null) {
+            view.showDraftLabel()
+            title = existingDraft.title
+            description = existingDraft.description
+        } else {
+            view.hideDraftLabel()
+            title = note.title
+            description = note.description
+        }
+
+        view.showNoteScreenTitle(title)
+        view.showNoteScreenDescription(description)
         view.showNoteScreen()
     }
 

@@ -1,6 +1,7 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
 <resources>
-    <string name="hint_title">Title</string>
+    <string name="draft">Draft</string>
     <string name="hint_description">Description</string>
+    <string name="hint_title">Title</string>
     <string name="no_notes">You haven\'t inserted any note yet.</string>
 </resources>

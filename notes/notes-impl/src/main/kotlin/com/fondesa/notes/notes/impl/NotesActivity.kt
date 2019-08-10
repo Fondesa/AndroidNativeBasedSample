@@ -11,6 +11,7 @@ import com.fondesa.notes.ui.api.view.BottomSheetVisibleCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_notes.*
+import kotlinx.android.synthetic.main.sheet_insert_note.*
 import javax.inject.Inject
 
 class NotesActivity : AppCompatActivity(),
@@ -79,6 +80,14 @@ class NotesActivity : AppCompatActivity(),
 
     override fun hideZeroElementsView() {
         zeroElementsTextView.visibility = View.INVISIBLE
+    }
+
+    override fun showDraftLabel() {
+        draftLabelView.visibility = View.VISIBLE
+    }
+
+    override fun hideDraftLabel() {
+        draftLabelView.visibility = View.INVISIBLE
     }
 
     override fun showNoteList(noteList: List<Note>) {
