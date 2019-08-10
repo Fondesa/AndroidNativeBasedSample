@@ -60,8 +60,17 @@ class NotesPresenter @Inject constructor(
 
         val newDraft = notesInteractor.getNewDraft()
 
-        val title = newDraft?.title ?: ""
-        val description = newDraft?.description ?: ""
+        val title: String
+        val description: String
+        if (newDraft != null) {
+            view.showDraftLabel()
+            title = newDraft.title
+            description = newDraft.description
+        } else {
+            view.hideDraftLabel()
+            title = ""
+            description = ""
+        }
 
         view.showNoteScreenTitle(title)
         view.showNoteScreenDescription(description)
