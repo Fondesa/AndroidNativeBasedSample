@@ -14,8 +14,6 @@ class NativeNotesInteractor @Inject constructor() : NotesInteractor {
     override fun insertNote(draft: Draft) =
         insertNote(handle, draft)
 
-    override fun deleteNote(noteId: Int) = deleteNote(handle, noteId)
-
     override fun updateNote(noteId: Int, draft: Draft) =
         updateNote(handle, noteId, draft)
 
@@ -36,13 +34,17 @@ class NativeNotesInteractor @Inject constructor() : NotesInteractor {
 
     override fun getExistingDraft(noteId: Int): Draft? = getExistingDraft(handle, noteId)
 
+    override fun deleteNote(noteId: Int) = deleteNote(handle, noteId)
+
+    override fun deleteNewDraft() = deleteNewDraft(handle)
+
+    override fun deleteExistingDraft(noteId: Int) = deleteExistingDraft(handle, noteId)
+
     override fun persistChanges() = persistChanges(handle)
 
     private external fun getRepositoryHandle(): Long
 
     private external fun insertNote(handle: Long, draft: Draft)
-
-    private external fun deleteNote(handle: Long, noteId: Int)
 
     private external fun updateNote(handle: Long, noteId: Int, draft: Draft)
 
@@ -63,6 +65,12 @@ class NativeNotesInteractor @Inject constructor() : NotesInteractor {
     private external fun getNewDraft(handle: Long): Draft?
 
     private external fun getExistingDraft(handle: Long, noteId: Int): Draft?
+
+    private external fun deleteNote(handle: Long, noteId: Int)
+
+    private external fun deleteNewDraft(handle: Long)
+
+    private external fun deleteExistingDraft(handle: Long, noteId: Int)
 
     private external fun persistChanges(handle: Long)
 

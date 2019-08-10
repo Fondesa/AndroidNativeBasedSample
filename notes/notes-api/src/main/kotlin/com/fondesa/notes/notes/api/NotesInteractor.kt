@@ -4,8 +4,6 @@ interface NotesInteractor {
 
     fun insertNote(draft: Draft)
 
-    fun deleteNote(noteId: Int)
-
     fun updateNote(noteId: Int, draft: Draft)
 
     fun updateNewDraftTitle(title: String)
@@ -21,6 +19,12 @@ interface NotesInteractor {
     fun getNewDraft(): Draft?
 
     fun getExistingDraft(noteId: Int): Draft?
+
+    fun deleteNote(noteId: Int)
+
+    fun deleteNewDraft()
+
+    fun deleteExistingDraft(noteId: Int)
 
     fun persistChanges()
 }

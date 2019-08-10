@@ -35,18 +35,6 @@ Java_com_fondesa_notes_notes_impl_NativeNotesInteractor_insertNote(
 }
 
 JNIEXPORT void JNICALL
-Java_com_fondesa_notes_notes_impl_NativeNotesInteractor_deleteNote(
-    JNIEnv *env,
-    jobject /* this */,
-    jlong handle,
-    jint id
-) {
-    auto repository = Jni::PointerWrapper<NotesInteractor>::get(handle);
-
-    repository->deleteNote(id);
-}
-
-JNIEXPORT void JNICALL
 Java_com_fondesa_notes_notes_impl_NativeNotesInteractor_updateNote(
     JNIEnv *env,
     jobject /* this */,
@@ -168,6 +156,41 @@ Java_com_fondesa_notes_notes_impl_NativeNotesInteractor_getExistingDraft(
         return Jni::mapFromNative<Draft>(env, draft.value(), cls, ctor);
     }
     return nullptr;
+}
+
+JNIEXPORT void JNICALL
+Java_com_fondesa_notes_notes_impl_NativeNotesInteractor_deleteNote(
+    JNIEnv *env,
+    jobject /* this */,
+    jlong handle,
+    jint id
+) {
+    auto repository = Jni::PointerWrapper<NotesInteractor>::get(handle);
+
+    repository->deleteNote(id);
+}
+
+JNIEXPORT void JNICALL
+Java_com_fondesa_notes_notes_impl_NativeNotesInteractor_deleteNewDraft(
+    JNIEnv *env,
+    jobject /* this */,
+    jlong handle
+) {
+    auto repository = Jni::PointerWrapper<NotesInteractor>::get(handle);
+
+    repository->deleteNewDraft();
+}
+
+JNIEXPORT void JNICALL
+Java_com_fondesa_notes_notes_impl_NativeNotesInteractor_deleteExistingDraft(
+    JNIEnv *env,
+    jobject /* this */,
+    jlong handle,
+    jint id
+) {
+    auto repository = Jni::PointerWrapper<NotesInteractor>::get(handle);
+
+    repository->deleteExistingDraft(id);
 }
 
 JNIEXPORT void JNICALL
