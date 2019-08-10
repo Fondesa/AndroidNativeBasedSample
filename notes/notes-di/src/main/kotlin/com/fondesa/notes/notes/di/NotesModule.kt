@@ -1,5 +1,6 @@
 package com.fondesa.notes.notes.di
 
+import androidx.lifecycle.LifecycleObserver
 import com.fondesa.notes.core.api.AppInitializer
 import com.fondesa.notes.notes.api.NotesInteractor
 import com.fondesa.notes.notes.impl.*
@@ -31,6 +32,10 @@ interface NotesModule {
 
         @Binds
         fun providePresenter(presenter: NotesPresenter): NotesContract.Presenter
+
+        @Binds
+        @IntoSet
+        fun providePresenterLifecycleObserver(presenter: NotesPresenter): LifecycleObserver
 
         @Binds
         fun provideHolderFactory(factory: NoteRecyclerViewHolderImplFactory): NoteRecyclerViewHolderFactory

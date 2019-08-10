@@ -1,18 +1,30 @@
 package com.fondesa.notes.notes.impl
 
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.OnLifecycleEvent
 import com.fondesa.notes.log.api.Log
 import com.fondesa.notes.notes.api.Draft
 import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.notes.api.NotesInteractor
+import com.fondesa.notes.thread.api.CoroutineContextProvider
 import com.fondesa.notes.ui.api.qualifiers.ScreenScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.coroutines.CoroutineContext
 
 @ScreenScope
 class NotesPresenter @Inject constructor(
     private val view: NotesContract.View,
-    private val notesInteractor: NotesInteractor
-) : NotesContract.Presenter {
+    private val notesInteractor: NotesInteractor,
+    private val contextProvider: CoroutineContextProvider
+) : NotesContract.Presenter,
+    LifecycleObserver,
+    CoroutineScope {
 
+    private val job = Job()
     private val noteScreenContent = NoteScreenContent(
         title = "",
         description = ""
@@ -25,6 +37,9 @@ class NotesPresenter @Inject constructor(
 
     private var isNoteScreenShown: Boolean = false
     private var pendingNoteScreenId: Int? = null
+
+    override val coroutineContext: CoroutineContext
+        get() = job + contextProvider.IO
 
     override fun attach() {
         buttonState = NoteButtonState.ADD
@@ -140,6 +155,18 @@ class NotesPresenter @Inject constructor(
         view.showNoteScreenTitle(note.title)
         view.showNoteScreenDescription(note.description)
         view.showNoteScreen()
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
+    private fun screenEntersBackgroundState() {
+        launch {
+            notesInteractor.persistChanges()
+        }
+    }
+
+    @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+    private fun detach() {
+        job.cancel()
     }
 
     private data class NoteScreenContent(

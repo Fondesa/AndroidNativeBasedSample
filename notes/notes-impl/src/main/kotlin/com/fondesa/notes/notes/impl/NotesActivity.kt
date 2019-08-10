@@ -3,6 +3,7 @@ package com.fondesa.notes.notes.impl
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.ui.api.util.hideKeyboard
@@ -21,6 +22,9 @@ class NotesActivity : AppCompatActivity(),
     internal lateinit var presenter: NotesContract.Presenter
 
     @Inject
+    internal lateinit var lifecycleObservers: Set<@JvmSuppressWildcards LifecycleObserver>
+
+    @Inject
     internal lateinit var adapter: NoteRecyclerViewAdapter
 
     private val noteSheet by lazy { insertNoteView.behavior as BottomSheetBehavior<*> }
@@ -29,6 +33,10 @@ class NotesActivity : AppCompatActivity(),
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notes)
+
+        lifecycleObservers.forEach {
+            lifecycle.addObserver(it)
+        }
 
         noteSheet.state = BottomSheetBehavior.STATE_HIDDEN
         noteSheet.setBottomSheetCallback(BottomSheetVisibleCallback(this))
