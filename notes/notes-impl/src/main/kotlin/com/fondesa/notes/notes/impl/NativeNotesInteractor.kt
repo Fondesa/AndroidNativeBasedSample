@@ -24,10 +24,11 @@ class NativeNotesInteractor @Inject constructor() : NotesInteractor {
     override fun updateNewDraftDescription(description: String) =
         updateNewDraftDescription(handle, description)
 
-    override fun updateExistingDraftTitle(title: String) = updateExistingDraftTitle(handle, title)
+    override fun updateExistingDraftTitle(noteId: Int, title: String) =
+        updateExistingDraftTitle(handle, noteId, title)
 
-    override fun updateExistingDraftDescription(description: String) =
-        updateExistingDraftDescription(handle, description)
+    override fun updateExistingDraftDescription(noteId: Int, description: String) =
+        updateExistingDraftDescription(handle, noteId, description)
 
     override fun getAllNotes(): List<Note> = getAllNotes(handle).toList()
 
@@ -49,9 +50,13 @@ class NativeNotesInteractor @Inject constructor() : NotesInteractor {
 
     private external fun updateNewDraftDescription(handle: Long, description: String)
 
-    private external fun updateExistingDraftTitle(handle: Long, title: String)
+    private external fun updateExistingDraftTitle(handle: Long, noteId: Int, title: String)
 
-    private external fun updateExistingDraftDescription(handle: Long, description: String)
+    private external fun updateExistingDraftDescription(
+        handle: Long,
+        noteId: Int,
+        description: String
+    )
 
     private external fun getAllNotes(handle: Long): Array<Note>
 

@@ -12,9 +12,9 @@ interface NotesInteractor {
 
     fun updateNewDraftDescription(description: String)
 
-    fun updateExistingDraftTitle(title: String)
+    fun updateExistingDraftTitle(noteId: Int, title: String)
 
-    fun updateExistingDraftDescription(description: String)
+    fun updateExistingDraftDescription(noteId: Int, description: String)
 
     fun getAllNotes(): List<Note>
 
