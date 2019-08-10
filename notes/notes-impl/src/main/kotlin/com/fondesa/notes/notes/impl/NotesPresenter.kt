@@ -111,6 +111,12 @@ class NotesPresenter @Inject constructor(
         } else {
             NoteButtonState.CANCEL
         }
+        val pendingNoteScreenId = pendingNoteScreenId
+        if (pendingNoteScreenId != null) {
+            notesInteractor.updateExistingDraftTitle(pendingNoteScreenId, title)
+        } else {
+            notesInteractor.updateNewDraftTitle(title)
+        }
     }
 
     override fun noteScreenDescriptionChanged(description: String) {
@@ -119,6 +125,12 @@ class NotesPresenter @Inject constructor(
             NoteButtonState.DONE
         } else {
             NoteButtonState.CANCEL
+        }
+        val pendingNoteScreenId = pendingNoteScreenId
+        if (pendingNoteScreenId != null) {
+            notesInteractor.updateExistingDraftDescription(pendingNoteScreenId, description)
+        } else {
+            notesInteractor.updateNewDraftDescription(description)
         }
     }
 
