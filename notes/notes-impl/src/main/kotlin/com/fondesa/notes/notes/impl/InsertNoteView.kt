@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.fondesa.notes.ui.api.util.hideKeyboard
 import com.fondesa.notes.ui.api.util.inflateChild
-import com.fondesa.notes.ui.api.view.AfterTextChangedWatcher
+import com.fondesa.notes.ui.api.view.ImmediateTextChangeWatcher
 import com.fondesa.notes.ui.api.view.AutoCloseBottomSheetBehavior
 import com.fondesa.notes.ui.api.view.BottomSheetVisibleCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -87,14 +87,14 @@ class InsertNoteView @JvmOverloads constructor(
 
     fun setOnTitleChangeListener(listener: (String) -> Unit) {
         clearOnTitleChangeListener()
-        titleChangeListener = AfterTextChangedWatcher(listener).also {
+        titleChangeListener = ImmediateTextChangeWatcher(listener).also {
             titleTextView.addTextChangedListener(it)
         }
     }
 
     fun setOnDescriptionChangeListener(listener: (String) -> Unit) {
         clearOnDescriptionChangeListener()
-        descriptionChangeListener = AfterTextChangedWatcher(listener).also {
+        descriptionChangeListener = ImmediateTextChangeWatcher(listener).also {
             descriptionTextView.addTextChangedListener(it)
         }
     }
