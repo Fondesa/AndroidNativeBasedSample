@@ -8,8 +8,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.fondesa.notes.log.api.Log
 import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.ui.api.util.hideKeyboard
-import com.fondesa.notes.ui.api.view.BottomSheetVisibleCallback
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_notes.*
 import kotlinx.android.synthetic.main.sheet_insert_note.*
@@ -17,8 +15,8 @@ import javax.inject.Inject
 
 class NotesActivity : AppCompatActivity(),
     NotesContract.View,
-    BottomSheetVisibleCallback.Listener,
-    NoteRecyclerViewAdapter.OnNoteClickListener {
+    NoteRecyclerViewAdapter.OnNoteClickListener,
+    InsertNoteView.VisibilityListener {
 
     @Inject
     internal lateinit var presenter: NotesContract.Presenter
@@ -29,8 +27,6 @@ class NotesActivity : AppCompatActivity(),
     @Inject
     internal lateinit var adapter: NoteRecyclerViewAdapter
 
-    private val noteSheet by lazy { insertNoteView.behavior as BottomSheetBehavior<*> }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
@@ -40,14 +36,12 @@ class NotesActivity : AppCompatActivity(),
             lifecycle.addObserver(it)
         }
 
-        noteSheet.state = BottomSheetBehavior.STATE_HIDDEN
-        noteSheet.setBottomSheetCallback(BottomSheetVisibleCallback(this))
-
         noteActionButton.setOnAddClickListener(presenter::addButtonClicked)
         noteActionButton.setOnDoneClickListener(presenter::doneButtonClicked)
         noteActionButton.setOnCancelClickListener(presenter::cancelButtonClicked)
         insertNoteView.setOnTitleChangeListener(presenter::noteScreenTitleChanged)
         insertNoteView.setOnDescriptionChangeListener(presenter::noteScreenDescriptionChanged)
+        insertNoteView.setOnVisibilityListener(this)
 
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         // Set the adapter on the RecyclerView.
@@ -94,12 +88,12 @@ class NotesActivity : AppCompatActivity(),
 
     override fun showNoteScreen() {
         Log.d("LYRA show note screen")
-        noteSheet.state = BottomSheetBehavior.STATE_COLLAPSED
+        insertNoteView.showCollapsed()
     }
 
     override fun hideNoteScreen() {
         Log.d("LYRA hide note screen")
-        noteSheet.state = BottomSheetBehavior.STATE_HIDDEN
+        insertNoteView.hide()
     }
 
     override fun renderButtonState(state: NoteButtonState) {
@@ -114,7 +108,7 @@ class NotesActivity : AppCompatActivity(),
         insertNoteView.setDescription(description)
     }
 
-    override fun onBottomSheetHidden() {
+    override fun onInsertNoteViewHidden() {
         Log.d("LYRA sheet hidden")
 
         hideKeyboard()
@@ -123,7 +117,7 @@ class NotesActivity : AppCompatActivity(),
         presenter.noteScreenHidden()
     }
 
-    override fun onBottomSheetShown() {
+    override fun onInsertNoteViewShown() {
         Log.d("LYRA sheet shown")
 
         dimBackgroundView.show()

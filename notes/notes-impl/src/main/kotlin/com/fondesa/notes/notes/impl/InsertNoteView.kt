@@ -10,6 +10,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.fondesa.notes.ui.api.util.inflateChild
 import com.fondesa.notes.ui.api.view.AfterTextChangedWatcher
 import com.fondesa.notes.ui.api.view.AutoCloseBottomSheetBehavior
+import com.fondesa.notes.ui.api.view.BottomSheetVisibleCallback
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.sheet_insert_note.view.*
 
@@ -17,7 +18,9 @@ class InsertNoteView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr), CoordinatorLayout.AttachedBehavior {
+) : LinearLayout(context, attrs, defStyleAttr),
+    CoordinatorLayout.AttachedBehavior,
+    BottomSheetVisibleCallback.Listener {
 
     private val behavior: BottomSheetBehavior<View> =
         if (attrs == null) {
@@ -28,6 +31,7 @@ class InsertNoteView @JvmOverloads constructor(
 
     private var titleChangeListener: TextWatcher? = null
     private var descriptionChangeListener: TextWatcher? = null
+    private var visibilityListener: VisibilityListener? = null
 
     init {
         inflateChild(R.layout.sheet_insert_note, attachToRoot = true)
@@ -36,15 +40,27 @@ class InsertNoteView @JvmOverloads constructor(
         val padding = resources.getDimensionPixelSize(R.dimen.space_lg)
         setPadding(padding, 0, padding, 0)
         orientation = VERTICAL
+
+        hide()
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         clearOnTitleChangeListener()
         clearOnDescriptionChangeListener()
+        behavior.setBottomSheetCallback(null)
+        visibilityListener = null
     }
 
     override fun getBehavior(): CoordinatorLayout.Behavior<*> = behavior
+
+    override fun onBottomSheetHidden() {
+        visibilityListener?.onInsertNoteViewHidden()
+    }
+
+    override fun onBottomSheetShown() {
+        visibilityListener?.onInsertNoteViewShown()
+    }
 
     fun setTitle(title: String) {
         titleTextView.setText(title)
@@ -52,6 +68,14 @@ class InsertNoteView @JvmOverloads constructor(
 
     fun setDescription(description: String) {
         descriptionTextView.setText(description)
+    }
+
+    fun showCollapsed() {
+        behavior.state = BottomSheetBehavior.STATE_COLLAPSED
+    }
+
+    fun hide() {
+        behavior.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
     fun setOnTitleChangeListener(listener: (String) -> Unit) {
@@ -68,6 +92,12 @@ class InsertNoteView @JvmOverloads constructor(
         }
     }
 
+    fun setOnVisibilityListener(listener: VisibilityListener) {
+        visibilityListener = listener
+        // Register the callback for the bottom sheet.
+        behavior.setBottomSheetCallback(BottomSheetVisibleCallback(this))
+    }
+
     private fun clearOnTitleChangeListener() {
         titleChangeListener?.let {
             titleTextView.removeTextChangedListener(it)
@@ -80,5 +110,12 @@ class InsertNoteView @JvmOverloads constructor(
             descriptionTextView.removeTextChangedListener(it)
         }
         descriptionChangeListener = null
+    }
+
+    interface VisibilityListener {
+
+        fun onInsertNoteViewHidden()
+
+        fun onInsertNoteViewShown()
     }
 }
