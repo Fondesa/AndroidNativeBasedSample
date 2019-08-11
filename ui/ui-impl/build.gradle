@@ -1,0 +1,11 @@
+apply plugin: 'com.android.library'
+apply plugin: 'common-android'
+
+dependencies {
+    compileOnly deps.javaxInject
+
+    api project(':ui:ui-api')
+    api project(':thread:thread-api')
+
+    implementation project(':log:log-api')
+}

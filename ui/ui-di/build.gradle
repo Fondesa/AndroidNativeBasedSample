@@ -1,0 +1,11 @@
+apply plugin: 'com.android.library'
+apply plugin: 'common-android'
+
+dependencies {
+    compileOnly deps.javaxInject
+
+    api project(':ui:ui-impl')
+    api deps.dagger
+
+    kapt deps.daggerCompiler
+}
