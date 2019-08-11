@@ -56,6 +56,9 @@ class App : DaggerApplication() {
 
     companion object {
         init {
+            // This is necessary below api 17 because all the native library's dependencies should
+            // be loaded manually.
+            System.loadLibrary("nativemobile")
             System.loadLibrary("notes-native")
         }
     }
