@@ -11,11 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!--
+        The bottom padding is fixed at 88dp because the list shouldn't overlap with the FAB.
+        It's necessary to set clipToPadding=false to show the list below the FAB when it scrolls.
+        In this way, the padding is graphically added only after the last item.
+        The value is equal to the sum of:
+        - the FAB top margin (16dp)
+        - the FAB bottom margin (16dp)
+        - the FAB size (56dp).
+        -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:clipToPadding="false"
             android:orientation="vertical"
+            android:paddingBottom="88dp"
             android:visibility="invisible"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
