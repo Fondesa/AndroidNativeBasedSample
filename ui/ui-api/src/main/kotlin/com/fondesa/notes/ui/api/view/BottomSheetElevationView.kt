@@ -9,7 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import com.fondesa.notes.ui.api.R
 
-class ElevationView @JvmOverloads constructor(
+class BottomSheetElevationView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

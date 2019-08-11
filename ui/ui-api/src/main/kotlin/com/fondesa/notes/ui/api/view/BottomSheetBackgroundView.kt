@@ -10,7 +10,7 @@ import androidx.core.content.ContextCompat
 import com.fondesa.notes.ui.api.R
 import com.fondesa.notes.ui.api.anim.AnimationDuration
 
-class DimBackgroundView @JvmOverloads constructor(
+class BottomSheetBackgroundView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
@@ -20,14 +20,16 @@ class DimBackgroundView @JvmOverloads constructor(
     private val onHideAnimationListener by lazy {
         object : AnimatorListenerAdapter() {
             override fun onAnimationEnd(animation: Animator) {
-                visibility = GONE
+                // When the view is not visible, it shouldn't intercept any touch event.
+                isClickable = false
             }
         }
     }
 
     init {
         alpha = 0f
-        visibility = GONE
+        // By default, this view won't intercept any touch event.
+        isClickable = false
 
         @ColorInt val color = ContextCompat.getColor(context, R.color.dim_background)
         setBackgroundColor(color)
@@ -37,7 +39,9 @@ class DimBackgroundView @JvmOverloads constructor(
         if (alpha == 1f) {
             return
         }
-        visibility = VISIBLE
+        // When the view is visible, all the clicks are intercepted by this view because the views
+        // behind the bottom sheet shouldn't handle any event.
+        isClickable = true
         animator.alpha(1f)
             .setListener(null)
             .start()

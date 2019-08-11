@@ -40,12 +40,12 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.fondesa.notes.ui.api.view.DimBackgroundView
+    <com.fondesa.notes.ui.api.view.BottomSheetBackgroundView
         android:id="@+id/dimBackgroundView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.fondesa.notes.ui.api.view.ElevationView
+    <com.fondesa.notes.ui.api.view.BottomSheetElevationView
         android:id="@+id/elevationView"
         android:layout_width="match_parent"
         android:layout_height="16dp"

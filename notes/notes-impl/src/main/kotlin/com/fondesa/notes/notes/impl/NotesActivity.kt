@@ -5,6 +5,7 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.fondesa.notes.log.api.Log
 import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.ui.api.util.hideKeyboard
 import com.fondesa.notes.ui.api.view.BottomSheetVisibleCallback
@@ -47,9 +48,6 @@ class NotesActivity : AppCompatActivity(),
         noteActionButton.setOnCancelClickListener(presenter::cancelButtonClicked)
         insertNoteView.setOnTitleChangeListener(presenter::noteScreenTitleChanged)
         insertNoteView.setOnDescriptionChangeListener(presenter::noteScreenDescriptionChanged)
-        dimBackgroundView.setOnClickListener {
-            presenter.pressedOutsideNoteScreen()
-        }
 
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         // Set the adapter on the RecyclerView.
@@ -95,10 +93,12 @@ class NotesActivity : AppCompatActivity(),
     }
 
     override fun showNoteScreen() {
+        Log.d("LYRA show note screen")
         noteSheet.state = BottomSheetBehavior.STATE_COLLAPSED
     }
 
     override fun hideNoteScreen() {
+        Log.d("LYRA hide note screen")
         noteSheet.state = BottomSheetBehavior.STATE_HIDDEN
     }
 
@@ -115,6 +115,8 @@ class NotesActivity : AppCompatActivity(),
     }
 
     override fun onBottomSheetHidden() {
+        Log.d("LYRA sheet hidden")
+
         hideKeyboard()
         dimBackgroundView.hide()
         elevationView.visibility = View.INVISIBLE
@@ -122,6 +124,8 @@ class NotesActivity : AppCompatActivity(),
     }
 
     override fun onBottomSheetShown() {
+        Log.d("LYRA sheet shown")
+
         dimBackgroundView.show()
         elevationView.visibility = View.VISIBLE
         presenter.noteScreenShown()

@@ -1,6 +1,6 @@
 package com.fondesa.notes.ui.api.view
 
-import android.annotation.SuppressLint
+import android.util.Log
 import android.view.View
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 
@@ -9,21 +9,19 @@ class BottomSheetVisibleCallback(private val listener: Listener) :
 
     private var sheetPreviouslyHidden = true
 
-    override fun onSlide(view: View, slideOffset: Float) = Unit
-
-    @SuppressLint("SwitchIntDef")
-    override fun onStateChanged(view: View, state: Int) {
-        when {
-            state == BottomSheetBehavior.STATE_HIDDEN && !sheetPreviouslyHidden -> {
-                listener.onBottomSheetHidden()
-                sheetPreviouslyHidden = true
-            }
-
-            state != BottomSheetBehavior.STATE_HIDDEN && sheetPreviouslyHidden -> {
-                listener.onBottomSheetShown()
-                sheetPreviouslyHidden = false
-            }
+    override fun onSlide(view: View, slideOffset: Float) {
+        val isHidden = slideOffset == -1f
+        if (isHidden && !sheetPreviouslyHidden) {
+            listener.onBottomSheetHidden()
+            sheetPreviouslyHidden = true
+        } else if (!isHidden && sheetPreviouslyHidden) {
+            listener.onBottomSheetShown()
+            sheetPreviouslyHidden = false
         }
+    }
+
+    override fun onStateChanged(view: View, state: Int) {
+        Log.d("LYRA", state.toString())
     }
 
     interface Listener {

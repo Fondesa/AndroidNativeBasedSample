@@ -9,6 +9,7 @@ import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.fondesa.notes.ui.api.util.inflateChild
 import com.fondesa.notes.ui.api.view.AfterTextChangedWatcher
+import com.fondesa.notes.ui.api.view.AutoCloseBottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.sheet_insert_note.view.*
 
@@ -20,11 +21,9 @@ class InsertNoteView @JvmOverloads constructor(
 
     private val behavior: BottomSheetBehavior<View> =
         if (attrs == null) {
-            BottomSheetBehavior()
+            AutoCloseBottomSheetBehavior()
         } else {
-            BottomSheetBehavior<View>(context, attrs)
-        }.apply {
-            isHideable = true
+            AutoCloseBottomSheetBehavior(context, attrs)
         }
 
     private var titleChangeListener: TextWatcher? = null
