@@ -7,7 +7,6 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.fondesa.notes.log.api.Log
 import com.fondesa.notes.notes.api.Note
-import com.fondesa.notes.ui.api.util.hideKeyboard
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_notes.*
 import kotlinx.android.synthetic.main.sheet_insert_note.*
@@ -111,7 +110,6 @@ class NotesActivity : AppCompatActivity(),
     override fun onInsertNoteViewHidden() {
         Log.d("LYRA sheet hidden")
 
-        hideKeyboard()
         dimBackgroundView.hide()
         elevationView.visibility = View.INVISIBLE
         presenter.noteScreenHidden()

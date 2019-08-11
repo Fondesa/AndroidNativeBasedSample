@@ -7,6 +7,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.fondesa.notes.ui.api.util.hideKeyboard
 import com.fondesa.notes.ui.api.util.inflateChild
 import com.fondesa.notes.ui.api.view.AfterTextChangedWatcher
 import com.fondesa.notes.ui.api.view.AutoCloseBottomSheetBehavior
@@ -41,6 +42,10 @@ class InsertNoteView @JvmOverloads constructor(
         setPadding(padding, 0, padding, 0)
         orientation = VERTICAL
 
+        // Prevent the EditText to gain the focus when this view is shown.
+        isFocusable = true
+        isFocusableInTouchMode = true
+
         hide()
     }
 
@@ -55,6 +60,8 @@ class InsertNoteView @JvmOverloads constructor(
     override fun getBehavior(): CoordinatorLayout.Behavior<*> = behavior
 
     override fun onBottomSheetHidden() {
+        clearFocus()
+        hideKeyboard()
         visibilityListener?.onInsertNoteViewHidden()
     }
 
