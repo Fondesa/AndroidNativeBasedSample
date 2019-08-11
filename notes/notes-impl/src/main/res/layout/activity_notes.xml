@@ -60,7 +60,7 @@
     <com.google.android.material.circularreveal.cardview.CircularRevealCardView
         android:id="@+id/toolbarContainer"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="48dp"
         android:layout_marginLeft="@dimen/space_lg"
         android:layout_marginTop="@dimen/space_md"
         android:layout_marginRight="@dimen/space_lg"
@@ -68,16 +68,29 @@
         app:cardCornerRadius="@dimen/radius_lg"
         app:cardElevation="@dimen/toolbar_card_elevation">
 
-        <com.google.android.material.appbar.AppBarLayout
+        <EditText
+            android:id="@+id/searchView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/space_lg"
+            android:layout_marginRight="@dimen/space_lg"
+            android:background="@null"
+            android:hint="@string/search_note"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:textSize="@dimen/text_md"
+            tools:ignore="UnusedAttribute" />
 
-            <androidx.appcompat.widget.Toolbar
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/white"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-        </com.google.android.material.appbar.AppBarLayout>
+        <!--<com.google.android.material.appbar.AppBarLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<androidx.appcompat.widget.Toolbar-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:background="@android:color/white"-->
+        <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
+        <!--</com.google.android.material.appbar.AppBarLayout>-->
     </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
 
     <com.fondesa.notes.ui.api.view.BottomSheetBackgroundView
