@@ -4,11 +4,8 @@ apply plugin: 'common-android'
 dependencies {
     compileOnly deps.javaxInject
 
-    api project(':thread:thread-api')
     api deps.androidAppCompat
     api deps.androidDesign
     api deps.androidAnnotation
     api deps.androidRecyclerView
-
-    implementation project(':log:log-api')
 }

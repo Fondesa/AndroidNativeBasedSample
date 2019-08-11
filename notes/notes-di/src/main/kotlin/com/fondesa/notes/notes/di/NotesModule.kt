@@ -1,10 +1,12 @@
 package com.fondesa.notes.notes.di
 
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import com.fondesa.notes.core.api.AppInitializer
 import com.fondesa.notes.notes.api.NotesInteractor
 import com.fondesa.notes.notes.impl.*
 import com.fondesa.notes.ui.api.scope.ScreenScope
+import com.fondesa.notes.ui.di.UiEntryPointModule
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
@@ -21,7 +23,7 @@ interface NotesModule {
     fun provideNotesDatabaseInitializer(initializer: NotesDatabaseInitializer): AppInitializer
 
     @ScreenScope
-    @ContributesAndroidInjector(modules = [ScreenBinds::class])
+    @ContributesAndroidInjector(modules = [ScreenBinds::class, UiEntryPointModule::class])
     fun notesListActivity(): NotesActivity
 
     @Module
@@ -32,6 +34,9 @@ interface NotesModule {
 
         @Binds
         fun providePresenter(presenter: NotesPresenter): NotesContract.Presenter
+
+        @Binds
+        fun provideLifecycleOwner(owner: NotesActivity): LifecycleOwner
 
         @Binds
         @IntoSet

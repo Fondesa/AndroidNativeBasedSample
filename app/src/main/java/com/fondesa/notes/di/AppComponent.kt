@@ -4,6 +4,7 @@ import com.fondesa.notes.App
 import com.fondesa.notes.log.di.LogModule
 import com.fondesa.notes.notes.di.NotesModule
 import com.fondesa.notes.thread.di.ThreadModule
+import com.fondesa.notes.ui.di.UiModule
 import dagger.BindsInstance
 import dagger.Component
 import dagger.android.AndroidInjector
@@ -17,7 +18,8 @@ import javax.inject.Singleton
         AppModule::class,
         LogModule::class,
         NotesModule::class,
-        ThreadModule::class
+        ThreadModule::class,
+        UiModule::class
     ]
 )
 interface AppComponent : AndroidInjector<App> {

@@ -9,6 +9,8 @@ import com.fondesa.notes.log.api.Log
 import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.ui.api.util.hideWithCircularAnim
 import com.fondesa.notes.ui.api.util.showWithCircularAnim
+import com.fondesa.notes.ui.api.view.DelayedTextWatcher
+import com.fondesa.notes.ui.api.view.TextWatcherFactory
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_notes.*
 import kotlinx.android.synthetic.main.sheet_insert_note.*
@@ -28,10 +30,18 @@ class NotesActivity : AppCompatActivity(),
     @Inject
     internal lateinit var adapter: NoteRecyclerViewAdapter
 
+    @Inject
+    @DelayedTextWatcher
+    internal lateinit var delayedTextWatcherFactory: TextWatcherFactory
+
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notes)
+
+        val searchTextWatcher = delayedTextWatcherFactory.create {
+
+        }
 
         lifecycleObservers.forEach {
             lifecycle.addObserver(it)

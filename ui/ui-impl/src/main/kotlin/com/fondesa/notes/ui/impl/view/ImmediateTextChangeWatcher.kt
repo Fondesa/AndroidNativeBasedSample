@@ -1,8 +1,11 @@
-package com.fondesa.notes.ui.api.view
+package com.fondesa.notes.ui.impl.view
 
 import android.text.Editable
 import android.text.TextWatcher
+import com.fondesa.notes.ui.api.view.TextWatcherFactory
+import com.google.auto.factory.AutoFactory
 
+@AutoFactory(implementing = [TextWatcherFactory::class])
 class ImmediateTextChangeWatcher(private inline val block: (String) -> Unit) : TextWatcher {
 
     override fun afterTextChanged(s: Editable?) {

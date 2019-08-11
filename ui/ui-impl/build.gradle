@@ -8,4 +8,8 @@ dependencies {
     api project(':thread:thread-api')
 
     implementation project(':log:log-api')
+    implementation deps.autoFactory
+
+    kapt deps.autoFactory
+    annotationProcessor deps.autoFactory
 }

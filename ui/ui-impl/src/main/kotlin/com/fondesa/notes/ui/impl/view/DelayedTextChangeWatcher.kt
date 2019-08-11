@@ -14,25 +14,31 @@
  * limitations under the License.
  */
 
-package com.fondesa.notes.ui.api.view
+package com.fondesa.notes.ui.impl.view
 
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.OnLifecycleEvent
 import com.fondesa.notes.log.api.Log
 import com.fondesa.notes.thread.api.CoroutineContextProvider
 import com.fondesa.notes.thread.api.launchWithDelay
+import com.fondesa.notes.ui.api.view.TextWatcherFactory
+import com.google.auto.factory.AutoFactory
+import com.google.auto.factory.Provided
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
+@AutoFactory(implementing = [TextWatcherFactory::class])
 class DelayedTextChangeWatcher(
-    private val contextProvider: CoroutineContextProvider,
-    private val thresholdMs: Long = DEFAULT_THRESHOLD_MS,
+    @Provided private val contextProvider: CoroutineContextProvider,
+    @Provided private val lifecycleOwner: LifecycleOwner,
+    @[Provided DelayedTextChangeWatcherThreshold] private val thresholdMs: Long,
     private inline val onChange: (String) -> Unit
 ) : TextWatcher,
     CoroutineScope,
@@ -44,6 +50,11 @@ class DelayedTextChangeWatcher(
     private val job = Job()
 
     private var currentText: String = ""
+
+    init {
+        // Add this as a lifecycle observer when it's created.
+        lifecycleOwner.lifecycle.addObserver(this)
+    }
 
     override fun afterTextChanged(s: Editable?) {
         val text = s?.toString() ?: ""
@@ -69,9 +80,5 @@ class DelayedTextChangeWatcher(
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     fun onDestroy() {
         job.cancel()
-    }
-
-    companion object {
-        private const val DEFAULT_THRESHOLD_MS: Long = 500
     }
 }
