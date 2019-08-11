@@ -70,8 +70,6 @@ object NotesContract {
 
         fun backPressed()
 
-        fun pressedOutsideNoteScreen()
-
         fun noteScreenShown()
 
         fun noteScreenHidden()

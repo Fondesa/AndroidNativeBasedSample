@@ -123,14 +123,6 @@ class NotesPresenter @Inject constructor(
         }
     }
 
-    override fun pressedOutsideNoteScreen() {
-        if (!isNoteScreenShown) {
-            Log.e("The presenter received the touch outside with the note screen hidden.")
-            return
-        }
-        view.hideNoteScreen()
-    }
-
     override fun noteScreenShown() {
         isNoteScreenShown = true
         buttonState = if (noteScreenContent.isValid) {
