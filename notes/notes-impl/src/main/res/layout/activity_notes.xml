@@ -57,7 +57,8 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.circularreveal.cardview.CircularRevealCardView
+        android:id="@+id/toolbarContainer"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginLeft="@dimen/space_lg"
@@ -77,7 +78,7 @@
                 android:background="@android:color/white"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
         </com.google.android.material.appbar.AppBarLayout>
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
 
     <com.fondesa.notes.ui.api.view.BottomSheetBackgroundView
         android:id="@+id/dimBackgroundView"

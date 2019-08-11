@@ -7,6 +7,8 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.fondesa.notes.log.api.Log
 import com.fondesa.notes.notes.api.Note
+import com.fondesa.notes.ui.api.util.hideWithCircularAnim
+import com.fondesa.notes.ui.api.util.showWithCircularAnim
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_notes.*
 import kotlinx.android.synthetic.main.sheet_insert_note.*
@@ -110,6 +112,7 @@ class NotesActivity : AppCompatActivity(),
     override fun onInsertNoteViewHidden() {
         Log.d("LYRA sheet hidden")
 
+        toolbarContainer.showWithCircularAnim()
         dimBackgroundView.hide()
         elevationView.visibility = View.INVISIBLE
         presenter.noteScreenHidden()
@@ -118,6 +121,7 @@ class NotesActivity : AppCompatActivity(),
     override fun onInsertNoteViewShown() {
         Log.d("LYRA sheet shown")
 
+        toolbarContainer.hideWithCircularAnim()
         dimBackgroundView.show()
         elevationView.visibility = View.VISIBLE
         presenter.noteScreenShown()
