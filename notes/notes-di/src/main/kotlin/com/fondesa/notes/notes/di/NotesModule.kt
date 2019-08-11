@@ -4,7 +4,7 @@ import androidx.lifecycle.LifecycleObserver
 import com.fondesa.notes.core.api.AppInitializer
 import com.fondesa.notes.notes.api.NotesInteractor
 import com.fondesa.notes.notes.impl.*
-import com.fondesa.notes.ui.api.qualifiers.ScreenScope
+import com.fondesa.notes.ui.api.scope.ScreenScope
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector

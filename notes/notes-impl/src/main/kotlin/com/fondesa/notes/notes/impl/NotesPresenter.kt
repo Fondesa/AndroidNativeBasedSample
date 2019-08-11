@@ -3,12 +3,11 @@ package com.fondesa.notes.notes.impl
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
-import com.fondesa.notes.log.api.Log
 import com.fondesa.notes.notes.api.Draft
 import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.notes.api.NotesInteractor
 import com.fondesa.notes.thread.api.CoroutineContextProvider
-import com.fondesa.notes.ui.api.qualifiers.ScreenScope
+import com.fondesa.notes.ui.api.scope.ScreenScope
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch

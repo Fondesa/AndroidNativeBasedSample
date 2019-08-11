@@ -1,4 +1,4 @@
-package com.fondesa.notes.ui.api.qualifiers
+package com.fondesa.notes.ui.api.scope
 
 import javax.inject.Scope
 
