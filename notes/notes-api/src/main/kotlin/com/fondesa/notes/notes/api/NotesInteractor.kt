@@ -16,6 +16,8 @@ interface NotesInteractor {
 
     fun getAllNotes(): List<Note>
 
+    fun getNotesByText(text: String): List<Note>
+
     fun getNewDraft(): Draft?
 
     fun getExistingDraft(noteId: Int): Draft?

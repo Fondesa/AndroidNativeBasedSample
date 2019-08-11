@@ -30,6 +30,8 @@ class NativeNotesInteractor @Inject constructor() : NotesInteractor {
 
     override fun getAllNotes(): List<Note> = getAllNotes(handle).toList()
 
+    override fun getNotesByText(text: String): List<Note> = getNotesByText(handle, text).toList()
+
     override fun getNewDraft(): Draft? = getNewDraft(handle)
 
     override fun getExistingDraft(noteId: Int): Draft? = getExistingDraft(handle, noteId)
@@ -61,6 +63,8 @@ class NativeNotesInteractor @Inject constructor() : NotesInteractor {
     )
 
     private external fun getAllNotes(handle: Long): Array<Note>
+
+    private external fun getNotesByText(handle: Long, text: String): Array<Note>
 
     private external fun getNewDraft(handle: Long): Draft?
 

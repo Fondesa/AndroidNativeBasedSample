@@ -123,6 +123,27 @@ Java_com_fondesa_notes_notes_impl_NativeNotesInteractor_getAllNotes(
     return Jni::jArrayFromVector<Note>(env, noteClass, notes, mapper);
 }
 
+JNIEXPORT jobjectArray JNICALL
+Java_com_fondesa_notes_notes_impl_NativeNotesInteractor_getNotesByText(
+    JNIEnv *env,
+    jobject /* this */,
+    jlong handle,
+    jstring jText
+) {
+    auto repository = Jni::PointerWrapper<NotesInteractor>::get(handle);
+
+    auto stringField = Jni::StringField(env, jText);
+    auto notes = repository->getNotesByText(std::string(stringField.utfValue));
+
+    jclass noteClass = Jni::findClass(env, Jni::Note::cls());
+    jmethodID noteConstructorId = Jni::findConstructor(env, noteClass, Jni::Note::ctor());
+
+    auto mapper = [&](Note note) {
+        return Jni::mapFromNative<Note>(env, note, noteClass, noteConstructorId);
+    };
+    return Jni::jArrayFromVector<Note>(env, noteClass, notes, mapper);
+}
+
 JNIEXPORT jobject JNICALL
 Java_com_fondesa_notes_notes_impl_NativeNotesInteractor_getNewDraft(
     JNIEnv *env,
