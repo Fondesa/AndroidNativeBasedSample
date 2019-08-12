@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:parentTag="com.google.android.material.circularreveal.cardview.CircularRevealCardView">
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/searchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_lg"
+        android:layout_marginTop="@dimen/search_vertical_padding"
+        android:layout_marginRight="@dimen/space_lg"
+        android:layout_marginBottom="@dimen/search_vertical_padding"
+        android:background="@null"
+        android:drawablePadding="@dimen/space_lg"
+        android:gravity="center_vertical"
+        android:hint="@string/search_note"
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:textSize="@dimen/text_md"
+        app:drawableLeftCompat="@drawable/ic_search"
+        app:drawableStartCompat="@drawable/ic_search"
+        tools:ignore="UnusedAttribute" />
+
+    <!--<com.google.android.material.appbar.AppBarLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<androidx.appcompat.widget.Toolbar-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@android:color/white"-->
+    <!--app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />-->
+    <!--</com.google.android.material.appbar.AppBarLayout>-->
+
+</merge>
