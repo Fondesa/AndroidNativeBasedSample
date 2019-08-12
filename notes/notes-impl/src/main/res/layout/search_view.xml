@@ -5,7 +5,7 @@
     tools:parentTag="com.google.android.material.circularreveal.cardview.CircularRevealCardView">
 
     <androidx.appcompat.widget.AppCompatEditText
-        android:id="@+id/searchView"
+        android:id="@+id/queryTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/space_lg"

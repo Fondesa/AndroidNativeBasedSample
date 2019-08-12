@@ -79,5 +79,7 @@ object NotesContract {
         fun noteScreenDescriptionChanged(description: String)
 
         fun noteClicked(note: Note)
+
+        fun searchQueryChanged(query: String)
     }
 }
