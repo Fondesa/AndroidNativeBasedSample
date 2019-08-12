@@ -3,8 +3,8 @@ package com.fondesa.notes.ui.di
 import androidx.lifecycle.LifecycleOwner
 import com.fondesa.notes.ui.api.view.DelayedTextWatcher
 import com.fondesa.notes.ui.api.view.TextWatcherFactory
+import com.fondesa.notes.ui.impl.view.DelayedTextChangeWatcherFactory
 import com.fondesa.notes.ui.impl.view.DelayedTextChangeWatcherThreshold
-import com.fondesa.notes.ui.impl.view.DelayedTextWatcherFactory
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -17,7 +17,7 @@ interface UiEntryPointModule {
 
     @DelayedTextWatcher
     @Binds
-    fun provideDelayedTextWatcherFactory(factory: DelayedTextWatcherFactory): TextWatcherFactory
+    fun provideDelayedTextWatcherFactory(factory: DelayedTextChangeWatcherFactory): TextWatcherFactory
 
     @Module
     object WithProvides {

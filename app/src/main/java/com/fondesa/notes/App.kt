@@ -6,6 +6,9 @@ import com.fondesa.notes.core.api.AppInitializer
 import com.fondesa.notes.di.DaggerAppComponent
 import com.fondesa.notes.log.api.Log
 import com.fondesa.notes.log.api.Logger
+import com.fondesa.notes.ui.api.injection.DispatchingViewInjector
+import com.fondesa.notes.ui.api.injection.HasViewInjector
+import com.fondesa.notes.ui.api.injection.ViewInjector
 import com.squareup.leakcanary.LeakCanary
 import dagger.android.AndroidInjector
 import dagger.android.support.DaggerApplication
@@ -14,13 +17,16 @@ import javax.inject.Inject
 /**
  * Main entry point of the entire application.
  */
-class App : DaggerApplication() {
+class App : DaggerApplication(), HasViewInjector {
 
     @Inject
     lateinit var logger: Logger
 
     @Inject
     lateinit var appInitializers: Set<@JvmSuppressWildcards AppInitializer>
+
+    @Inject
+    lateinit var viewInjector: DispatchingViewInjector
 
     override fun attachBaseContext(base: Context?) {
         super.attachBaseContext(base)
@@ -53,6 +59,7 @@ class App : DaggerApplication() {
                 it.inject(this)
             }
 
+    override fun viewInjector(): ViewInjector<Any> = viewInjector
 
     companion object {
         init {

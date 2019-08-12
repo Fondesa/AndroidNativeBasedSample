@@ -7,12 +7,16 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.fondesa.notes.ui.api.injection.ViewInjection
 import com.fondesa.notes.ui.api.util.hideKeyboard
 import com.fondesa.notes.ui.api.util.inflateChild
 import com.fondesa.notes.ui.api.view.AutoCloseBottomSheetBehavior
 import com.fondesa.notes.ui.api.view.BottomSheetVisibleCallback
+import com.fondesa.notes.ui.api.view.ImmediateTextWatcher
+import com.fondesa.notes.ui.api.view.TextWatcherFactory
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.sheet_insert_note.view.*
+import javax.inject.Inject
 
 class InsertNoteView @JvmOverloads constructor(
     context: Context,
@@ -29,11 +33,17 @@ class InsertNoteView @JvmOverloads constructor(
             AutoCloseBottomSheetBehavior(context, attrs)
         }
 
+    @Inject
+    @field:ImmediateTextWatcher
+    internal lateinit var immediateTextWatcherFactory: TextWatcherFactory
+
     private var titleChangeListener: TextWatcher? = null
     private var descriptionChangeListener: TextWatcher? = null
     private var visibilityListener: VisibilityListener? = null
 
     init {
+        ViewInjection.inject(this)
+
         inflateChild(R.layout.sheet_insert_note, attachToRoot = true)
 
         setBackgroundColor(Color.WHITE)
@@ -86,18 +96,16 @@ class InsertNoteView @JvmOverloads constructor(
 
     fun setOnTitleChangeListener(listener: (String) -> Unit) {
         clearOnTitleChangeListener()
-//        titleChangeListener = com.fondesa.notes.ui.impl.view.ImmediateTextChangeWatcher(listener).also {
-//            titleTextView.addTextChangedListener(it)
-//        }
+        titleChangeListener = immediateTextWatcherFactory.create(listener).also {
+            titleTextView.addTextChangedListener(it)
+        }
     }
 
     fun setOnDescriptionChangeListener(listener: (String) -> Unit) {
         clearOnDescriptionChangeListener()
-//        descriptionChangeListener = com.fondesa.notes.ui.impl.view.ImmediateTextChangeWatcher(
-//            listener
-//        ).also {
-//            descriptionTextView.addTextChangedListener(it)
-//        }
+        descriptionChangeListener = immediateTextWatcherFactory.create(listener).also {
+            descriptionTextView.addTextChangedListener(it)
+        }
     }
 
     fun setOnVisibilityListener(listener: VisibilityListener) {

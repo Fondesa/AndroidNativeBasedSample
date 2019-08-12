@@ -5,14 +5,17 @@ import androidx.lifecycle.LifecycleOwner
 import com.fondesa.notes.core.api.AppInitializer
 import com.fondesa.notes.notes.api.NotesInteractor
 import com.fondesa.notes.notes.impl.*
+import com.fondesa.notes.ui.api.injection.ViewInjector
 import com.fondesa.notes.ui.api.scope.ScreenScope
 import com.fondesa.notes.ui.di.UiEntryPointModule
 import dagger.Binds
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
+import dagger.multibindings.ClassKey
+import dagger.multibindings.IntoMap
 import dagger.multibindings.IntoSet
 
-@Module
+@Module(subcomponents = [InsertNoteViewComponent::class])
 interface NotesModule {
 
     @Binds
@@ -51,4 +54,9 @@ interface NotesModule {
         @Binds
         fun provideOnNoteClickListener(activity: NotesActivity): NoteRecyclerViewAdapter.OnNoteClickListener
     }
+
+    @Binds
+    @IntoMap
+    @ClassKey(InsertNoteView::class)
+    fun provideInsertNoteViewComponentBuilder(builder: InsertNoteViewComponent.Builder): ViewInjector.Builder<*>
 }

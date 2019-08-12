@@ -31,7 +31,7 @@ class NotesActivity : AppCompatActivity(),
     internal lateinit var adapter: NoteRecyclerViewAdapter
 
     @Inject
-    @DelayedTextWatcher
+    @field:DelayedTextWatcher
     internal lateinit var delayedTextWatcherFactory: TextWatcherFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {

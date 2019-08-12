@@ -8,4 +8,5 @@ dependencies {
     api deps.androidDesign
     api deps.androidAnnotation
     api deps.androidRecyclerView
+    api deps.dagger
 }
