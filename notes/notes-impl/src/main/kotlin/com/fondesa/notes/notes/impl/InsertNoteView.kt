@@ -10,6 +10,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.fondesa.notes.ui.api.injection.ViewInjection
 import com.fondesa.notes.ui.api.util.hideKeyboard
 import com.fondesa.notes.ui.api.util.inflateChild
+import com.fondesa.notes.ui.api.util.setTextChangedListener
 import com.fondesa.notes.ui.api.view.AutoCloseBottomSheetBehavior
 import com.fondesa.notes.ui.api.view.BottomSheetVisibleCallback
 import com.fondesa.notes.ui.api.view.ImmediateTextWatcher
@@ -37,8 +38,20 @@ class InsertNoteView @JvmOverloads constructor(
     @field:ImmediateTextWatcher
     internal lateinit var immediateTextWatcherFactory: TextWatcherFactory
 
-    private var titleChangeListener: TextWatcher? = null
-    private var descriptionChangeListener: TextWatcher? = null
+    private val titleWatcher: TextWatcher by lazy {
+        immediateTextWatcherFactory.create {
+            titleChangeListener?.invoke(it)
+        }
+    }
+
+    private val descriptionWatcher: TextWatcher by lazy {
+        immediateTextWatcherFactory.create {
+            descriptionChangeListener?.invoke(it)
+        }
+    }
+
+    private var titleChangeListener: ((String) -> Unit)? = null
+    private var descriptionChangeListener: ((String) -> Unit)? = null
     private var visibilityListener: VisibilityListener? = null
 
     init {
@@ -60,8 +73,6 @@ class InsertNoteView @JvmOverloads constructor(
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        clearOnTitleChangeListener()
-        clearOnDescriptionChangeListener()
         behavior.setBottomSheetCallback(null)
         visibilityListener = null
     }
@@ -95,37 +106,19 @@ class InsertNoteView @JvmOverloads constructor(
     }
 
     fun setOnTitleChangeListener(listener: (String) -> Unit) {
-        clearOnTitleChangeListener()
-        titleChangeListener = immediateTextWatcherFactory.create(listener).also {
-            titleTextView.addTextChangedListener(it)
-        }
+        titleChangeListener = listener
+        titleTextView.setTextChangedListener(titleWatcher)
     }
 
     fun setOnDescriptionChangeListener(listener: (String) -> Unit) {
-        clearOnDescriptionChangeListener()
-        descriptionChangeListener = immediateTextWatcherFactory.create(listener).also {
-            descriptionTextView.addTextChangedListener(it)
-        }
+        descriptionChangeListener = listener
+        descriptionTextView.setTextChangedListener(descriptionWatcher)
     }
 
     fun setOnVisibilityListener(listener: VisibilityListener) {
         visibilityListener = listener
         // Register the callback for the bottom sheet.
         behavior.setBottomSheetCallback(BottomSheetVisibleCallback(this))
-    }
-
-    private fun clearOnTitleChangeListener() {
-        titleChangeListener?.let {
-            titleTextView.removeTextChangedListener(it)
-        }
-        titleChangeListener = null
-    }
-
-    private fun clearOnDescriptionChangeListener() {
-        descriptionChangeListener?.let {
-            descriptionTextView.removeTextChangedListener(it)
-        }
-        descriptionChangeListener = null
     }
 
     interface VisibilityListener {

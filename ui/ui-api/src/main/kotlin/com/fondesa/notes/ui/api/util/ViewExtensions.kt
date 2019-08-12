@@ -1,8 +1,10 @@
 package com.fondesa.notes.ui.api.util
 
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.annotation.LayoutRes
 
 /**
@@ -14,3 +16,8 @@ import androidx.annotation.LayoutRes
  */
 fun ViewGroup.inflateChild(@LayoutRes layout: Int, attachToRoot: Boolean = false): View =
     LayoutInflater.from(context).inflate(layout, this, attachToRoot)
+
+fun TextView.setTextChangedListener(watcher: TextWatcher) {
+    removeTextChangedListener(watcher)
+    addTextChangedListener(watcher)
+}
