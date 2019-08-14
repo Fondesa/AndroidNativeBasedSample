@@ -1,11 +1,15 @@
 package com.fondesa.notes.ui.api.util
 
+import android.app.Activity
+import android.content.ContextWrapper
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.TextView
 import androidx.annotation.LayoutRes
+
 
 /**
  * Inflates a layout inside the receiver.
@@ -21,3 +25,17 @@ fun TextView.setTextChangedListener(watcher: TextWatcher) {
     removeTextChangedListener(watcher)
     addTextChangedListener(watcher)
 }
+
+val View.activity: Activity?
+    get() {
+        var context = context
+        while (context is ContextWrapper) {
+            if (context is Activity) {
+                return context
+            }
+            context = context.baseContext
+        }
+        return null
+    }
+
+val View.window: Window? get() = activity?.window

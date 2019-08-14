@@ -4,12 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".NotesActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/noteListContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true">
 
         <!--
         It's necessary to set clipToPadding=false to show the list content below the FAB and the CardView
@@ -69,7 +71,8 @@
     <com.fondesa.notes.ui.api.view.BottomSheetBackgroundView
         android:id="@+id/dimBackgroundView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true" />
 
     <com.fondesa.notes.ui.api.view.BottomSheetElevationView
         android:id="@+id/elevationView"
