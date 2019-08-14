@@ -49,7 +49,14 @@ class NotesPresenter @Inject constructor(
     override fun attach() {
         buttonState = NoteButtonState.ADD
         val notes = notesInteractor.getAllNotes()
-        view.presentNotes(notes)
+        if (notes.isEmpty()) {
+            view.hideListContainer()
+            view.showZeroElementsView()
+        } else {
+            view.hideZeroElementsView()
+            view.showListContainer()
+            view.showNoteList(notes)
+        }
     }
 
     override fun addButtonClicked() {
@@ -190,7 +197,14 @@ class NotesPresenter @Inject constructor(
 
     override fun searchQueryChanged(query: String) {
         val notes = notesInteractor.getNotesByText(query)
-        view.presentNotes(notes)
+        if (notes.isEmpty()) {
+            view.hideListContainer()
+            view.showZeroElementsViewForQuery()
+        } else {
+            view.hideZeroElementsView()
+            view.showListContainer()
+            view.showNoteList(notes)
+        }
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_STOP)
@@ -204,17 +218,6 @@ class NotesPresenter @Inject constructor(
     @OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
     private fun detach() {
         job.cancel()
-    }
-
-    private fun NotesContract.View.presentNotes(notes: List<Note>) {
-        if (notes.isEmpty()) {
-            hideListContainer()
-            showZeroElementsView()
-        } else {
-            hideZeroElementsView()
-            showListContainer()
-            showNoteList(notes)
-        }
     }
 
     private fun toggleDraftLabel() {

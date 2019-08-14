@@ -3,6 +3,7 @@
     <string name="draft">Draft</string>
     <string name="hint_description">Description</string>
     <string name="hint_title">Title</string>
-    <string name="no_notes">You haven\'t inserted any note yet.</string>
+    <string name="no_notes_yet">You haven\'t inserted any note yet</string>
+    <string name="no_notes_found">No notes found</string>
     <string name="search_note">Search note</string>
 </resources>

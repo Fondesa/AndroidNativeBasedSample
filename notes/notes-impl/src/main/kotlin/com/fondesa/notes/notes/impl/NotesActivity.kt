@@ -67,6 +67,12 @@ class NotesActivity : AppCompatActivity(),
     }
 
     override fun showZeroElementsView() {
+        zeroElementsTextView.setText(R.string.no_notes_yet)
+        zeroElementsTextView.visibility = View.VISIBLE
+    }
+
+    override fun showZeroElementsViewForQuery() {
+        zeroElementsTextView.setText(R.string.no_notes_found)
         zeroElementsTextView.visibility = View.VISIBLE
     }
 

@@ -30,6 +30,8 @@ object NotesContract {
          */
         fun showZeroElementsView()
 
+        fun showZeroElementsViewForQuery()
+
         /**
          * Hides the view which indicates there are no notes inserted by the user.
          */
