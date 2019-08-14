@@ -5,8 +5,4 @@
     <color name="primary_dark">#00574B</color>
     <color name="dim_background">#99000000</color>
     <color name="elevation">#33000000</color>
-
-    <color name="status_bar_api_21">#CCCCCC</color>
-    <!-- This color is the opaque result from the combination of #FFFFFF and #99000000 (dim_background). -->
-    <color name="status_bar_dim_api_21">#666666</color>
 </resources>

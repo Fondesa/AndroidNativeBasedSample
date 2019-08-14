@@ -1,49 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
 <merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:orientation="vertical"
-    tools:parentTag="android.widget.LinearLayout">
+    tools:parentTag="android.widget.FrameLayout">
 
-    <TextView
-        android:id="@+id/draftLabelView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_md"
-        android:text="@string/draft"
-        android:textAllCaps="true"
-        android:textColor="@color/draft_label"
-        android:textSize="@dimen/text_sm"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        tools:visibility="visible" />
-
-    <EditText
-        android:id="@+id/titleTextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/space_md"
-        android:background="@null"
-        android:hint="@string/hint_title"
-        android:inputType="textMultiLine"
-        android:textColor="?android:textColorPrimary"
-        android:textSize="@dimen/text_lg"
-        android:textStyle="bold"
-        tools:ignore="Autofill"
-        tools:text="Dummy title" />
-
-    <EditText
-        android:id="@+id/descriptionTextView"
+    <!--
+    Although this container seems useless, it's used to show the resize the layout correctly when
+    the soft keyboard is opened.
+    -->
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/space_md"
-        android:layout_marginBottom="@dimen/space_lg"
-        android:background="@null"
-        android:gravity="top"
-        android:hint="@string/hint_description"
-        android:inputType="textMultiLine"
-        android:textColor="?android:textColorSecondary"
-        android:textSize="@dimen/text_md"
-        tools:ignore="Autofill"
-        tools:text="Dummy description" />
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/draftLabelView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_md"
+            android:text="@string/draft"
+            android:textAllCaps="true"
+            android:textColor="@color/draft_label"
+            android:textSize="@dimen/text_sm"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            tools:visibility="visible" />
+
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/space_md">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.fondesa.notes.ui.api.view.AutoClearFocusEditText
+                    android:id="@+id/titleTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@null"
+                    android:hint="@string/hint_title"
+                    android:inputType="textMultiLine"
+                    android:textColor="?android:textColorPrimary"
+                    android:textSize="@dimen/text_lg"
+                    android:textStyle="bold"
+                    tools:ignore="Autofill"
+                    tools:text="Dummy title" />
+
+                <com.fondesa.notes.ui.api.view.AutoClearFocusEditText
+                    android:id="@+id/descriptionTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_md"
+                    android:layout_marginBottom="@dimen/space_lg"
+                    android:background="@null"
+                    android:gravity="top"
+                    android:hint="@string/hint_description"
+                    android:inputType="textMultiLine"
+                    android:textColor="?android:textColorSecondary"
+                    android:textSize="@dimen/text_md"
+                    tools:ignore="Autofill"
+                    tools:text="Dummy description" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </LinearLayout>
 </merge>

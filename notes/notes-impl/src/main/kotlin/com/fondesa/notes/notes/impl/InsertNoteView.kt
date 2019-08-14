@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.text.TextWatcher
 import android.util.AttributeSet
 import android.view.View
-import android.widget.LinearLayout
+import android.widget.FrameLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.fondesa.notes.ui.api.injection.ViewInjection
 import com.fondesa.notes.ui.api.util.hideKeyboard
@@ -23,7 +23,7 @@ class InsertNoteView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
-) : LinearLayout(context, attrs, defStyleAttr),
+) : FrameLayout(context, attrs, defStyleAttr),
     CoordinatorLayout.AttachedBehavior,
     BottomSheetVisibleCallback.Listener {
 
@@ -62,7 +62,6 @@ class InsertNoteView @JvmOverloads constructor(
         setBackgroundColor(Color.WHITE)
         val padding = resources.getDimensionPixelSize(R.dimen.space_lg)
         setPadding(padding, 0, padding, 0)
-        orientation = VERTICAL
 
         // Prevent the EditText to gain the focus when this view is shown.
         isFocusable = true
