@@ -26,12 +26,9 @@ class BottomSheetBackgroundView @JvmOverloads constructor(
         val alphaAnimator = createAlphaAnimator(from = 0f, to = 1f)
         if (statusBarColorAnimator == null) {
             alphaAnimator.setDefaultDuration()
-            alphaAnimator.addListener(onHideAnimationListener)
             return@lazy alphaAnimator
         }
-        animatorSetOf(alphaAnimator, statusBarColorAnimator).apply {
-            addListener(onHideAnimationListener)
-        }
+        animatorSetOf(alphaAnimator, statusBarColorAnimator)
     }
 
     private val hideAnimator by lazy {
@@ -45,7 +42,9 @@ class BottomSheetBackgroundView @JvmOverloads constructor(
             alphaAnimator.addListener(onHideAnimationListener)
             return@lazy alphaAnimator
         }
-        animatorSetOf(alphaAnimator, statusBarColorAnimator)
+        animatorSetOf(alphaAnimator, statusBarColorAnimator).apply {
+            addListener(onHideAnimationListener)
+        }
     }
 
     private val onHideAnimationListener by lazy {
