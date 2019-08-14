@@ -34,10 +34,9 @@
     <EditText
         android:id="@+id/descriptionTextView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="@dimen/space_md"
         android:layout_marginBottom="@dimen/space_lg"
-        android:layout_weight="1"
         android:background="@null"
         android:gravity="top"
         android:hint="@string/hint_description"

@@ -79,6 +79,30 @@ class InsertNoteView @JvmOverloads constructor(
 
     override fun getBehavior(): CoordinatorLayout.Behavior<*> = behavior
 
+    override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
+        super.onMeasure(widthMeasureSpec, heightMeasureSpec)
+        val parentWidth = MeasureSpec.getSize(widthMeasureSpec)
+        val parentHeight = MeasureSpec.getSize(heightMeasureSpec)
+        // Fix the height of the bottom sheet to 3/5 of the parent's height.
+        // When the keyboard is shown the bottom sheet will be resized.
+        val viewHeight = parentHeight / 5 * 3
+        setMeasuredDimension(parentWidth, viewHeight)
+
+        measureChildren(
+            widthMeasureSpec,
+            MeasureSpec.makeMeasureSpec(viewHeight, MeasureSpec.EXACTLY)
+        )
+    }
+
+    override fun onLayout(changed: Boolean, l: Int, t: Int, r: Int, b: Int) {
+        super.onLayout(changed, l, t, r, b)
+        if (changed) {
+            // The peek height is equal to the bottom sheet height to avoid two different heights
+            // between the collapsed and the expanded state.
+            behavior.peekHeight = b - t
+        }
+    }
+
     override fun onBottomSheetHidden() {
         clearFocus()
         hideKeyboard()
