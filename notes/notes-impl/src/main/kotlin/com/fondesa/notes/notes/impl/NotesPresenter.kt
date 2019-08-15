@@ -103,11 +103,6 @@ class NotesPresenter @Inject constructor(
         view.hideZeroElementsView()
         view.showListContainer()
         view.showNoteList(notes)
-
-//        TODO not necessary
-//        view.hideDraftLabel()
-//        view.showNoteScreenTitle("")
-//        view.showNoteScreenDescription("")
     }
 
     override fun cancelButtonClicked() {
