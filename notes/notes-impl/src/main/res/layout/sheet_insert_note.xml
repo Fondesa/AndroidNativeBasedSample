@@ -29,11 +29,12 @@
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fillViewport="true"
             android:layout_marginTop="@dimen/space_md">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <com.fondesa.notes.ui.api.view.AutoClearFocusEditText
@@ -52,7 +53,8 @@
                 <com.fondesa.notes.ui.api.view.AutoClearFocusEditText
                     android:id="@+id/descriptionTextView"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:layout_marginTop="@dimen/space_md"
                     android:layout_marginBottom="@dimen/space_lg"
                     android:background="@null"
