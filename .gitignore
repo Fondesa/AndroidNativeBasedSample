@@ -77,3 +77,4 @@ projectFilesBackup
 /.vscode
 *.code-workspace
 .externalNativeBuild
+.cxx
