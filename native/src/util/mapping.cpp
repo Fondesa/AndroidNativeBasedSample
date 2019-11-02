@@ -24,11 +24,19 @@ jobject mapFromNative<Note>(JNIEnv *env, Note obj, jclass cls, jmethodID constru
     jstring noteTitle = env->NewStringUTF(note.getTitle().c_str());
     jstring noteDescription = env->NewStringUTF(note.getDescription().c_str());
 
+    std::time_t cTime = note.getLastUpdateTime();
+    auto dateCls = Jni::findClass(env, "java/util/Date");
+    auto dateCtor = Jni::findConstructor(env, dateCls, "(J)V");
+    const int ms = 1000;
+    jlong jTime = static_cast<jlong>(cTime) * ms;
+    auto noteDate = env->NewObject(dateCls, dateCtor, jTime);
+
     return env->NewObject(cls,
                           constructor,
                           noteId,
                           noteTitle,
-                          noteDescription);
+                          noteDescription,
+                          noteDate);
 }
 
 template<>
@@ -48,8 +56,7 @@ Note mapToNative(JNIEnv *env, jobject obj) {
     auto id = Jni::findField<int>(env, obj, cls, "id");
     auto title = Jni::findField<StringField>(env, obj, cls, "title");
     auto description = Jni::findField<StringField>(env, obj, cls, "description");
-
-    // TODO
-    return Note(id, title.utfValue, description.utfValue, "2019-10-26T10:03:38Z");
+    auto time = Jni::findField<std::time_t>(env, obj, cls, "lastUpdateDate");
+    return Note(id, title.utfValue, description.utfValue, time);
 }
 }

@@ -8,7 +8,7 @@ inline const char *const &cls() {
 }
 
 inline const char *const &ctor() {
-    static const char *value = "(ILjava/lang/String;Ljava/lang/String;)V";
+    static const char *value = "(ILjava/lang/String;Ljava/lang/String;Ljava/util/Date;)V";
     return value;
 }
 }

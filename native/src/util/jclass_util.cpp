@@ -1,6 +1,7 @@
 #include <string>
 #include "notes.hpp"
 #include "jclass_util.hpp"
+#include <ctime>
 
 namespace Jni {
 
@@ -58,6 +59,18 @@ template<>
 int findField(JNIEnv *env, jobject obj, jclass cls, const char *fieldName) {
     jfieldID fieldId = env->GetFieldID(cls, fieldName, "I");
     return env->GetIntField(obj, fieldId);
+}
+
+template<>
+time_t findField(JNIEnv *env, jobject obj, jclass cls, const char *fieldName) {
+    jfieldID fieldId = env->GetFieldID(cls, fieldName, "Ljava/util/Date;");
+    jobject dateObj = env->GetObjectField(obj, fieldId);
+    jclass dateCls = env->GetObjectClass(dateObj);
+    jmethodID getTimeMethod = env->GetMethodID(dateCls, "getTime", "()J");
+    jlong time = env->CallLongMethod(dateObj, getTimeMethod);
+    const int ms = 1000;
+    jlong seconds = time / ms;
+    return static_cast<time_t>(seconds);
 }
 
 template<>
