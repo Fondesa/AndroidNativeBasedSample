@@ -1,6 +1,6 @@
 #include <jni.h>
 #include <string>
-#include "note_database_initializer.hpp"
+#include "notes.hpp"
 
 extern "C" {
 

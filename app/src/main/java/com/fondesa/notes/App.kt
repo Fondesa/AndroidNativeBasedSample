@@ -65,8 +65,8 @@ class App : DaggerApplication(), HasViewInjector {
         init {
             // This is necessary below api 17 because all the native library's dependencies should
             // be loaded manually.
-            System.loadLibrary("nativemobile")
-            System.loadLibrary("notes-native")
+            System.loadLibrary("notesnative")
+            System.loadLibrary("notes-native-jni")
         }
     }
 }

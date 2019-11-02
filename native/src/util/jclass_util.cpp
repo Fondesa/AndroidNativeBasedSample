@@ -1,5 +1,5 @@
 #include <string>
-#include <note.hpp>
+#include "notes.hpp"
 #include "jclass_util.hpp"
 
 namespace Jni {

@@ -13,6 +13,6 @@ android {
     }
 
     sourceSets.forEach {
-        it.jniLibs.srcDirs += "libs/nativemobile"
+        it.jniLibs.srcDirs += "libs/notesnative"
     }
 }

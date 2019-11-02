@@ -3,8 +3,7 @@
 #include "util/mapping.hpp"
 #include "util/jclass_util.hpp"
 #include "note/note_class_util.hpp"
-#include "notes_interactor_factory.hpp"
-#include "database_client.hpp"
+#include "notes.hpp"
 #include "util/pointer_wrapper.hpp"
 #include "log/log.hpp"
 

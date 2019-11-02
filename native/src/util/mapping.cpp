@@ -1,6 +1,5 @@
 #include <vector>
-#include <note.hpp>
-#include "draft.hpp"
+#include "notes.hpp"
 #include "mapping.hpp"
 #include "jclass_util.hpp"
 
@@ -50,6 +49,7 @@ Note mapToNative(JNIEnv *env, jobject obj) {
     auto title = Jni::findField<StringField>(env, obj, cls, "title");
     auto description = Jni::findField<StringField>(env, obj, cls, "description");
 
-    return Note(id, title.utfValue, description.utfValue);
+    // TODO
+    return Note(id, title.utfValue, description.utfValue, "2019-10-26T10:03:38Z");
 }
 }
