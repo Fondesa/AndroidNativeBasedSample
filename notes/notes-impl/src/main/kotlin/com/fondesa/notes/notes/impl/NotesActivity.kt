@@ -9,7 +9,7 @@ import com.fondesa.notes.log.api.Log
 import com.fondesa.notes.notes.api.Note
 import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.activity_notes.*
-import kotlinx.android.synthetic.main.sheet_insert_note.*
+import java.util.*
 import javax.inject.Inject
 
 class NotesActivity : AppCompatActivity(),
@@ -80,16 +80,12 @@ class NotesActivity : AppCompatActivity(),
         zeroElementsTextView.visibility = View.INVISIBLE
     }
 
-    override fun showDraftLabel() {
-        draftLabelView.visibility = View.VISIBLE
-    }
-
-    override fun hideDraftLabel() {
-        draftLabelView.visibility = View.INVISIBLE
-    }
-
-    override fun showNoteList(noteList: List<Note>) {
+    override fun updateNoteList(noteList: List<Note>) {
         adapter.updateList(noteList)
+    }
+
+    override fun renderButtonState(state: NoteButtonState) {
+        noteActionButton.state = state
     }
 
     override fun showNoteScreen() {
@@ -102,16 +98,32 @@ class NotesActivity : AppCompatActivity(),
         insertNoteView.hide()
     }
 
-    override fun renderButtonState(state: NoteButtonState) {
-        noteActionButton.state = state
-    }
-
-    override fun showNoteScreenTitle(title: String) {
+    override fun updateNoteScreenTitle(title: String) {
         insertNoteView.setTitle(title)
     }
 
-    override fun showNoteScreenDescription(description: String) {
+    override fun updateNoteScreenDescription(description: String) {
         insertNoteView.setDescription(description)
+    }
+
+    override fun updateNoteScreenLastUpdateDate(date: Date) {
+        insertNoteView.setLastUpdateDate(date)
+    }
+
+    override fun showNoteScreenDraftLabel() {
+        insertNoteView.showDraftLabel()
+    }
+
+    override fun hideNoteScreenDraftLabel() {
+        insertNoteView.hideDraftLabel()
+    }
+
+    override fun showNoteScreenDateLabel() {
+        insertNoteView.showDateLabel()
+    }
+
+    override fun hideNoteScreenDateLabel() {
+        insertNoteView.hideDateLabel()
     }
 
     override fun onInsertNoteViewHidden() {

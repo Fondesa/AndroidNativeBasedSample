@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.fondesa.notes.ui.api.injection.ViewInjection
+import com.fondesa.notes.ui.api.time.UiDateFormatter
 import com.fondesa.notes.ui.api.util.hideKeyboard
 import com.fondesa.notes.ui.api.util.inflateChild
 import com.fondesa.notes.ui.api.util.setTextChangedListener
@@ -17,6 +18,7 @@ import com.fondesa.notes.ui.api.view.ImmediateTextWatcher
 import com.fondesa.notes.ui.api.view.TextWatcherFactory
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import kotlinx.android.synthetic.main.sheet_insert_note.view.*
+import java.util.*
 import javax.inject.Inject
 
 class InsertNoteView @JvmOverloads constructor(
@@ -37,6 +39,9 @@ class InsertNoteView @JvmOverloads constructor(
     @Inject
     @field:ImmediateTextWatcher
     internal lateinit var immediateTextWatcherFactory: TextWatcherFactory
+
+    @Inject
+    internal lateinit var uiDateFormatter: UiDateFormatter
 
     private val titleWatcher: TextWatcher by lazy {
         immediateTextWatcherFactory.create {
@@ -118,6 +123,27 @@ class InsertNoteView @JvmOverloads constructor(
 
     fun setDescription(description: String) {
         descriptionTextView.setText(description)
+    }
+
+    fun setLastUpdateDate(date: Date) {
+        val readableDate = uiDateFormatter.formatToReadableDate(date)
+        dateLabelView.text = readableDate
+    }
+
+    fun showDraftLabel() {
+        draftLabelView.visibility = View.VISIBLE
+    }
+
+    fun hideDraftLabel() {
+        draftLabelView.visibility = View.INVISIBLE
+    }
+
+    fun showDateLabel() {
+        dateLabelView.visibility = View.VISIBLE
+    }
+
+    fun hideDateLabel() {
+        dateLabelView.visibility = View.INVISIBLE
     }
 
     fun showCollapsed() {

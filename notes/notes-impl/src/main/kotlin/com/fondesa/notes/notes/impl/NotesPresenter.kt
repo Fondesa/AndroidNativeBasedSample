@@ -55,7 +55,7 @@ class NotesPresenter @Inject constructor(
         } else {
             view.hideZeroElementsView()
             view.showListContainer()
-            view.showNoteList(notes)
+            view.updateNoteList(notes)
         }
     }
 
@@ -80,8 +80,9 @@ class NotesPresenter @Inject constructor(
             description = ""
         }
 
-        view.showNoteScreenTitle(title)
-        view.showNoteScreenDescription(description)
+        view.updateNoteScreenTitle(title)
+        view.updateNoteScreenDescription(description)
+        view.hideNoteScreenDateLabel()
         view.showNoteScreen()
     }
 
@@ -102,7 +103,7 @@ class NotesPresenter @Inject constructor(
         val notes = notesInteractor.getAllNotes()
         view.hideZeroElementsView()
         view.showListContainer()
-        view.showNoteList(notes)
+        view.updateNoteList(notes)
     }
 
     override fun cancelButtonClicked() {
@@ -164,7 +165,7 @@ class NotesPresenter @Inject constructor(
     }
 
     override fun noteClicked(note: Note) {
-        val (noteId, noteTitle, noteDescription) = note
+        val (noteId, noteTitle, noteDescription, noteDate) = note
         _originalNoteScreenContent = OriginalNoteScreenContent(
             title = noteTitle,
             description = noteDescription
@@ -185,8 +186,10 @@ class NotesPresenter @Inject constructor(
             description = noteDescription
         }
 
-        view.showNoteScreenTitle(title)
-        view.showNoteScreenDescription(description)
+        view.updateNoteScreenTitle(title)
+        view.updateNoteScreenDescription(description)
+        view.updateNoteScreenLastUpdateDate(noteDate)
+        view.showNoteScreenDateLabel()
         view.showNoteScreen()
     }
 
@@ -198,7 +201,7 @@ class NotesPresenter @Inject constructor(
         } else {
             view.hideZeroElementsView()
             view.showListContainer()
-            view.showNoteList(notes)
+            view.updateNoteList(notes)
         }
     }
 
@@ -220,9 +223,9 @@ class NotesPresenter @Inject constructor(
         val isOriginalDescription =
             noteScreenContent.description == originalNoteScreenContent.description
         if (isOriginalTitle && isOriginalDescription) {
-            view.hideDraftLabel()
+            view.hideNoteScreenDraftLabel()
         } else {
-            view.showDraftLabel()
+            view.showNoteScreenDraftLabel()
         }
     }
 

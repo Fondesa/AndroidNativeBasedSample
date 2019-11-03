@@ -8,6 +8,7 @@ dependencies {
     api project(':thread:thread-api')
 
     implementation project(':log:log-api')
+    implementation project(':time:time-api')
     implementation deps.autoFactory
 
     kapt deps.autoFactory

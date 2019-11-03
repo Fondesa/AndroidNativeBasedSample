@@ -2,6 +2,7 @@ package com.fondesa.notes.notes.impl
 
 import com.fondesa.notes.notes.api.Note
 import com.fondesa.notes.ui.api.mvp.BasePresenter
+import java.util.*
 
 /**
  * Contract between the view and the presenter for the note list screen.
@@ -37,26 +38,32 @@ object NotesContract {
          */
         fun hideZeroElementsView()
 
-        fun showDraftLabel()
-
-        fun hideDraftLabel()
-
         /**
          * Updates the current list of notes with the given one.
          *
          * @param noteList the new list of notes which should be shown.
          */
-        fun showNoteList(noteList: List<Note>)
+        fun updateNoteList(noteList: List<Note>)
+
+        fun renderButtonState(state: NoteButtonState)
 
         fun showNoteScreen()
 
         fun hideNoteScreen()
 
-        fun renderButtonState(state: NoteButtonState)
+        fun updateNoteScreenTitle(title: String)
 
-        fun showNoteScreenTitle(title: String)
+        fun updateNoteScreenDescription(description: String)
 
-        fun showNoteScreenDescription(description: String)
+        fun updateNoteScreenLastUpdateDate(date: Date)
+
+        fun showNoteScreenDraftLabel()
+
+        fun hideNoteScreenDraftLabel()
+
+        fun showNoteScreenDateLabel()
+
+        fun hideNoteScreenDateLabel()
     }
 
     /**

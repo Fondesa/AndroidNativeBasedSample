@@ -1,0 +1,5 @@
+apply plugin: 'common-jvm'
+
+dependencies {
+    implementation deps.kotlinStdLib
+}
